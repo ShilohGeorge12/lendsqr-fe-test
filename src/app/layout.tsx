@@ -15,6 +15,24 @@ const avenirRegular = localFont({
 	// weight: '100 900',
 	display: 'swap',
 });
+const robotoMedium = localFont({
+	src: './fonts/Roboto-Medium.ttf',
+	variable: '--font-roboto-medium',
+	// weight: '100 900',
+	display: 'swap',
+});
+const robotoReguler = localFont({
+	src: './fonts/Roboto-Regular.ttf',
+	variable: '--font-roboto-regular',
+	// weight: '100 900',
+	display: 'swap',
+});
+const workSansReguler = localFont({
+	src: './fonts/WorkSans-Regular.ttf',
+	variable: '--font-work-sans-regular',
+	// weight: '100 900',
+	display: 'swap',
+});
 
 export const metadata: Metadata = {
 	title: 'lendsqr-fe-test',
@@ -24,7 +42,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<html lang="en">
-			<body className={`${avenir.variable} ${avenirRegular.variable}`}>{children}</body>
+			<body className={`${avenir.variable} ${avenirRegular.variable} ${robotoMedium} ${robotoReguler}`}>{children}</body>
 		</html>
 	);
 }

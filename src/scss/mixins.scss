@@ -7,3 +7,9 @@
 	align-items: $align;
 	justify-content: $justify;
 }
+@mixin flex-row($gap: 2px, $justify: start, $align: start) {
+	display: flex;
+	gap: $gap;
+	align-items: $align;
+	justify-content: $justify;
+}
