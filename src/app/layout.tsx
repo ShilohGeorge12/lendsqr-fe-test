@@ -1,17 +1,19 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import './globals.scss';
 
 import localFont from 'next/font/local';
 
-const geistSans = localFont({
-	src: './fonts/GeistVF.woff',
-	variable: '--font-geist-sans',
-	weight: '100 900',
+const avenir = localFont({
+	src: './fonts/AvenirNextLTPro-Bold.otf',
+	variable: '--font-avenir-bold',
+	// weight: '100 900',
+	display: 'swap',
 });
-const geistMono = localFont({
-	src: './fonts/GeistMonoVF.woff',
-	variable: '--font-geist-mono',
-	weight: '100 900',
+const avenirRegular = localFont({
+	src: './fonts/AvenirNextLTPro-Regular.otf',
+	variable: '--font-avenir-regular',
+	// weight: '100 900',
+	display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -22,7 +24,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<html lang="en">
-			<body className={`${geistSans.variable} ${geistMono.variable}`}>{children}</body>
+			<body className={`${avenir.variable} ${avenirRegular.variable}`}>{children}</body>
 		</html>
 	);
 }

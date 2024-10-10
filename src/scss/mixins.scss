@@ -1,0 +1,9 @@
+@import './variables.scss';
+
+@mixin flex-column($gap: 2px, $justify: start, $align: start) {
+	display: flex;
+	flex-direction: column;
+	gap: $gap;
+	align-items: $align;
+	justify-content: $justify;
+}

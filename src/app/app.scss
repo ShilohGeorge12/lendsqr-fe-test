@@ -1,0 +1,190 @@
+@import '../scss/mixins.scss';
+
+.sign-in {
+	padding: 0rem 0rem;
+	.sign-in-nav {
+		padding: 2rem 4rem;
+		@include flex-column(1px, center, start);
+		img {
+			// padding-left: 1rem;
+			object-fit: cover;
+		}
+
+		@media (max-width: 640px) {
+			padding: 1rem 1rem;
+			@include flex-column(1px, center, start);
+			img {
+				object-fit: cover;
+				width: 160px;
+				height: 30px;
+			}
+		}
+	}
+
+	.sign-in-content {
+		width: 80%;
+		height: 90dvh;
+		margin: auto;
+		display: grid;
+		background: rgba(255, 255, 255, 1);
+		grid-template-columns: repeat(2, 1fr);
+		.sign-in-col-1 {
+			width: 100%;
+			@include flex-column(5px, center, center);
+			// .div {
+			// 	width: 600px;
+			// 	height: 600px;
+			// 	border: 2px solid black;
+			// 	@include flex-column(1px, center, center);
+			svg {
+				width: 600px;
+				height: 338px;
+				rect {
+					width: 600px;
+					height: 337.569px;
+				}
+			}
+			// }
+		}
+		.sign-in-col-2 {
+			width: 100%;
+			@include flex-column(80px, center, start);
+
+			.sign-in-col-2-text {
+				width: 100%;
+				@include flex-column(8px);
+
+				h1 {
+					width: 100%;
+					@include flex-column(1px, center, start);
+					color: $font-color-main;
+					font-size: 2.5rem;
+					font-weight: 700;
+					font-family: $font-bold;
+					margin: 10px 0px 0px 0px;
+				}
+
+				p {
+					width: 100%;
+					@include flex-column(1px, center, start);
+					color: $font-color;
+					font-size: 1.25rem;
+					font-weight: 400;
+					margin: 5px 0rem;
+				}
+			}
+
+			.sign-in-col-2-form {
+				width: 100%;
+				@include flex-column(25px, center, start);
+				input {
+					width: 90%;
+					height: 40px;
+					letter-spacing: 1.5px;
+					font-weight: 400;
+					margin: 0px;
+					border-radius: 8px;
+					outline: 0px;
+					border: 2px solid rgba(84, 95, 125, 0.15);
+					padding: 0px 8px;
+					font-size: 1rem;
+					transition: 500ms all ease-in-out;
+					color: $font-color;
+					&::placeholder {
+						color: rgba(84, 95, 125, 1);
+						font-size: 0.89rem;
+						font-family: $font-normal;
+					}
+					&:focus {
+						border-width: 3px;
+						transform: scale(1.05);
+					}
+				}
+
+				a {
+					width: fit-content;
+					text-decoration: none;
+					color: $font-color2;
+					font-weight: 600;
+					letter-spacing: 2px;
+				}
+
+				button {
+					width: 95%;
+					height: 44px;
+					outline: 0px;
+					color: white;
+					font-weight: 600;
+					letter-spacing: 2px;
+					border-radius: 10px;
+					border-color: $font-color2;
+					background: $font-color2;
+					transition: all;
+					transition-duration: 500ms;
+					transition-timing-function: ease-in-out;
+					&:hover {
+						transform: scale(1.05);
+					}
+				}
+			}
+		}
+
+		@media (max-width: 640px) {
+			width: 99%;
+			height: 100dvh;
+			padding: 1rem 0rem;
+			// grid-template-columns: repeat(1, 1fr);
+			grid-template-columns: 1fr;
+			grid-template-rows: 260px 370px;
+			.sign-in-col-1 {
+				@include flex-column(4rem);
+				// height: 250px;
+				svg {
+					width: 360px;
+					height: 238px;
+				}
+			}
+
+			.sign-in-col-2 {
+				gap: 10px;
+				.sign-in-col-2-text {
+					gap: 5px;
+
+					h1 {
+						font-size: 1.9rem;
+						align-items: center;
+						justify-content: center;
+						margin: 0px;
+					}
+					p {
+						font-size: 1rem;
+						align-items: center;
+						justify-content: center;
+					}
+				}
+				.sign-in-col-2-form {
+					gap: 19px;
+					input {
+						width: 85%;
+						height: 40px;
+						&::placeholder {
+							color: rgba(84, 95, 125, 1);
+							font-size: 1rem;
+						}
+						margin: 0px auto;
+					}
+
+					a {
+						font-size: 0.75rem;
+						padding-left: 1.2rem;
+					}
+
+					button {
+						width: 90%;
+						margin: 0 auto;
+					}
+				}
+			}
+		}
+	}
+}
