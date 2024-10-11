@@ -292,11 +292,6 @@ header {
 
 		@media (max-width: 640px) {
 			@include flex-row(1px, flex-start, center);
-			&.flex {
-			}
-		}
-
-		::-webkit-scrollbar {
 		}
 	}
 }

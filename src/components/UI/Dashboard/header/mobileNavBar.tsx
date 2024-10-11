@@ -157,7 +157,7 @@ export function MobileNavBar() {
 			{nav_menu === 'open' && (
 				<motion.nav
 					key={'mobile_navbar'}
-					className={nav_menu === 'open' ? 'flex' : ''}
+					// className={nav_menu === 'open' ? 'flex' : ''}
 					onClick={() => dispatch({ type: 'nav_menu_close' })}>
 					<motion.section
 						initial={{ x: '-100vw', opacity: 0 }} // Start off-screen to the left
