@@ -6,7 +6,6 @@
 		padding: 2rem 4rem;
 		@include flex-column(1px, center, start);
 		img {
-			// padding-left: 1rem;
 			object-fit: cover;
 		}
 
@@ -77,6 +76,23 @@
 			.sign-in-col-2-form {
 				width: 100%;
 				@include flex-column(25px, center, start);
+
+				.sign-in-col-2-password-input {
+					position: relative;
+					width: fit-content;
+
+					button {
+						width: 87px;
+						position: absolute;
+						top: 0px;
+						right: 0px;
+						color: $font-color2;
+						background: transparent;
+						outline: 0px;
+						border: 0px solid transparent;
+					}
+				}
+
 				input {
 					width: 90%;
 					height: 40px;
@@ -93,12 +109,17 @@
 					&::placeholder {
 						color: $font-color3;
 						font-size: 0.89rem;
-						font-family: $font-normal;
+						font-family: $font-avenir-regular;
 					}
 					&:focus {
 						border-width: 3px;
 						transform: scale(1.05);
 					}
+				}
+
+				input[name='password'] {
+					width: 357px;
+					padding-right: 90px;
 				}
 
 				a {
@@ -125,6 +146,27 @@
 					&:hover {
 						transform: scale(1.05);
 					}
+				}
+
+				button[type='submit'] {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					gap: 8px;
+					font-size: 1.2rem;
+					.animate-btn {
+						@include animateSpin();
+						font-size: 1.75rem;
+					}
+				}
+
+				.error-msg {
+					width: 90%;
+					@include flex-column(4px, center, justify-evenly);
+					margin: 0px auto;
+					font-size: 0.9rem;
+					font-weight: 400;
+					color: red;
 				}
 			}
 		}
