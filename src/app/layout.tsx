@@ -3,6 +3,8 @@ import './globals.scss';
 
 import localFont from 'next/font/local';
 
+import { ContextProvider } from '@/context';
+
 const avenir = localFont({
 	src: './fonts/AvenirNextLTPro-Bold.otf',
 	variable: '--font-avenir-bold',
@@ -42,7 +44,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<html lang="en">
-			<body className={`${avenir.variable} ${avenirRegular.variable} ${robotoMedium} ${robotoReguler}`}>{children}</body>
+			<body className={`${avenir.variable} ${avenirRegular.variable} ${robotoMedium} ${robotoReguler} ${workSansReguler}`}>
+				<ContextProvider>{children}</ContextProvider>
+			</body>
 		</html>
 	);
 }

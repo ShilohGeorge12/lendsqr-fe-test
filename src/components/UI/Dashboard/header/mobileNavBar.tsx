@@ -1,15 +1,22 @@
 'use client';
 
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { FaHome } from 'react-icons/fa';
+import { IoIosMenu } from 'react-icons/io';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 
 import { BreifCase1, ChartBar, DecisionModels, Loan, Sliders, User1, UserCog, UserFreinds } from '@/components/svg';
 import { Bank, CoinSolid, Galazy, Group104, IconSvg, PiggyBank, Scroll, UserCheck, UserTimes } from '@/components/svg/svgs2';
 import { Badge, ClipBoard } from '@/components/svg/svgs3';
+import { useGlobals } from '@/context';
 
-export function NavBar() {
+export function MobileNavBar() {
+	const {
+		state: { nav_menu },
+		dispatch,
+	} = useGlobals();
 	const path = usePathname();
 	const customers = [
 		{
@@ -137,60 +144,83 @@ export function NavBar() {
 			text: 'Audit Logs',
 		},
 	];
-
 	return (
-		<nav>
-			<section className="nav-content-1">
-				<div className="nav-breifcase1">
-					<BreifCase1 />
-					<p>Switch Organization</p>
-					<MdKeyboardArrowDown />
-				</div>
+		<AnimatePresence>
+			<button
+				type="button"
+				name={`mobile navigation trigger menu button`}
+				className={`nav-trigger-btn`}
+				onClick={() => dispatch({ type: 'nav_menu_open' })}>
+				<IoIosMenu />
+			</button>
 
-				<div className="nav-home">
-					<FaHome />
-					<p className="">Dashboard</p>
-				</div>
-			</section>
-			<section className="nav-customers">
-				<p className="text">CUSTOMERS</p>
+			{nav_menu === 'open' && (
+				<motion.nav
+					key={'mobile_navbar'}
+					className={nav_menu === 'open' ? 'flex' : ''}
+					onClick={() => dispatch({ type: 'nav_menu_close' })}>
+					<motion.section
+						initial={{ x: '-100vw', opacity: 0 }} // Start off-screen to the left
+						animate={{ x: 0, opacity: 1 }} // No animation needed when open
+						exit={{ x: '-100vw', opacity: 0 }} // Animate out smoothly
+						transition={{ duration: 0.5, ease: 'easeInOut' }}
+						onClick={(e) => e.stopPropagation()}
+						className="mobile-nav-containers">
+						<section className="mobile-nav">
+							<div className="mobile-nav-breifcase">
+								<BreifCase1 />
+								<p>Switch Organization</p>
+								<MdKeyboardArrowDown />
+							</div>
 
-				{customers.map((customer) => (
-					<Link
-						key={customer.id}
-						href={customer.href}
-						className={path === customer.href ? 'active' : ''}>
-						<customer.icon />
-						<p className="">{customer.text}</p>
-					</Link>
-				))}
-			</section>
-			<section className="nav-businesses">
-				<p className="text">BUSINESSES</p>
+							<div className="mobile-nav-home">
+								<FaHome />
+								<p className="">Dashboard</p>
+							</div>
+						</section>
 
-				{businesses.map((business) => (
-					<Link
-						key={business.id}
-						href={business.href}
-						className={path === business.href ? 'active' : ''}>
-						<business.icon />
-						<p className="">{business.text}</p>
-					</Link>
-				))}
-			</section>
-			<section className="nav-settings">
-				<p className="text">SETTINGS</p>
+						<section className="mobile-nav-customers">
+							<p className="mobile-nav-text">CUSTOMERS</p>
+							{customers.map((customer) => (
+								<Link
+									key={customer.id}
+									href={customer.href}
+									className={path === customer.href ? 'active' : ''}>
+									<customer.icon />
+									<p className="">{customer.text}</p>
+								</Link>
+							))}
+						</section>
 
-				{settings.map((setting) => (
-					<Link
-						key={setting.id}
-						href={setting.href}
-						className={path === setting.href ? 'active' : ''}>
-						<setting.icon />
-						<p className="">{setting.text}</p>
-					</Link>
-				))}
-			</section>
-		</nav>
+						<section className="mobile-nav-businesses">
+							<p className="mobile-nav-text">BUSINESSES</p>
+
+							{businesses.map((business) => (
+								<Link
+									key={business.id}
+									href={business.href}
+									className={path === business.href ? 'active' : ''}>
+									<business.icon />
+									<p className="">{business.text}</p>
+								</Link>
+							))}
+						</section>
+						<section className="mobile-nav-settings">
+							<p className="mobile-nav-text">SETTINGS</p>
+
+							{settings.map((setting) => (
+								<Link
+									key={setting.id}
+									href={setting.href}
+									className={path === setting.href ? 'active' : ''}>
+									<setting.icon />
+									<p className="">{setting.text}</p>
+								</Link>
+							))}
+						</section>
+					</motion.section>
+				</motion.nav>
+			)}
+		</AnimatePresence>
 	);
 }

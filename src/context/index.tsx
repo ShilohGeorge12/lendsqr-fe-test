@@ -6,6 +6,7 @@ import type { State, ReducerType, stateAction } from '../types';
 
 const initState: State = {
 	isLoggedIn: false,
+	nav_menu: 'close',
 	user: {
 		email: '',
 	},
@@ -22,6 +23,10 @@ const reducer: ReducerType = (state, action) => {
 			return { ...state, isLoggedIn: action.payload.loggedIn, user: { ...state.user, email: action.payload.user.email } };
 		case 'isLoggedOut':
 			return { ...state, isLoggedIn: action.payload.loggedIn };
+		case 'nav_menu_open':
+			return { ...state, nav_menu: 'open' };
+		case 'nav_menu_close':
+			return { ...state, nav_menu: 'close' };
 		default:
 			return state;
 	}

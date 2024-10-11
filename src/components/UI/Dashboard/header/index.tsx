@@ -7,6 +7,8 @@ import { MdArrowDropDown } from 'react-icons/md';
 import image from '@/assets/image_4.png';
 import logo from '@/assets/logo.png';
 
+import { MobileNavBar } from './mobileNavBar';
+
 export function DashboardHeader() {
 	return (
 		<header className="header">
@@ -38,6 +40,8 @@ export function DashboardHeader() {
 					<MdArrowDropDown className="header-profile-down-arrow" />
 				</div>
 			</section>
+
+			<MobileNavBar />
 		</header>
 	);
 }
