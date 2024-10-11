@@ -60,9 +60,17 @@ header {
 					border-width: 3px;
 				}
 			}
+			input:focus + span {
+				width: 40px;
+				height: 38px;
+				transition-delay: 100ms;
+				transition-duration: 500ms;
+				transition-property: all;
+				transition-timing-function: ease-in-out;
+			}
 			span {
 				width: 40px;
-				height: 46px;
+				height: 36px;
 				position: absolute;
 				top: 0px;
 				right: 0px;
@@ -74,6 +82,9 @@ header {
 				border: 2px solid $font-color2;
 				background: $font-color2;
 				color: white;
+				transition-duration: 500ms;
+				transition-property: all;
+				transition-timing-function: ease-in-out;
 			}
 		}
 		@media (max-width: 640px) {
@@ -140,6 +151,101 @@ header {
 			gap: 4px;
 			grid-column: span 6 / span 6;
 			grid-column-start: 7;
+		}
+	}
+}
+
+.dashboard-user {
+	width: 100%;
+	min-height: 86.5dvh;
+	display: grid;
+	grid-template-columns: 283px auto;
+
+	nav {
+		width: 92%;
+		height: 100%;
+		// padding-left: 20.25px;
+		@include flex-column(8px, flex-start, flex-start);
+
+		.nav-content-1 {
+			width: 80%;
+			padding-left: 20.25px;
+			@include flex-column(30px, flex-start, center);
+
+			.nav-breifcase1 {
+				width: 100%;
+				height: 19px;
+				margin-top: 35px;
+				color: $font-color-main;
+				@include flex-row(8px, flex-start, center);
+				p {
+					margin: 0px;
+					svg {
+						fill: $font-color-main, 40%;
+						fill-opacity: 0.7;
+					}
+					padding-top: 5px;
+					display: grid;
+					place-items: center;
+					text-align: center;
+					font-size: 1rem;
+					font-weight: 400;
+					font-family: $font--work-sans-regular;
+				}
+			}
+
+			.nav-home {
+				width: 100%;
+				height: 40px;
+				color: $font-color-main;
+				@include flex-row(8px, flex-start, center);
+				font-size: 1rem;
+				font-weight: 400;
+				font-family: $font--work-sans-regular;
+
+				p {
+					padding-top: 3px;
+				}
+			}
+		}
+		.nav-customers,
+		.nav-businesses,
+		.nav-settings {
+			width: 100%;
+			@include flex-column(2px, center, flex-start);
+			color: $font-color-main;
+			font-size: 1rem;
+			font-weight: 400;
+			font-family: $font--work-sans-regular;
+			.text {
+				padding-left: 20.25px;
+				margin-top: 15px;
+				height: 40px;
+				@include flex-row(8px, flex-start, center);
+				font-size: 0.76rem;
+				font-weight: 500;
+				font-family: $font--work-sans-regular;
+			}
+
+			a {
+				width: 100%;
+				padding-left: 20.25px;
+				@include flex-row(8px, flex-start, center);
+				height: 40px;
+				color: $font-color-main;
+				text-decoration: none;
+				transition-duration: 500ms;
+				transition-property: all;
+				transition-timing-function: ease-in-out;
+				svg {
+					fill: $font-color-main;
+					fill-opacity: 0.7;
+				}
+				&.active {
+					background: lighten($font-color2, 45%);
+					border-left: 4px solid $font-color2;
+				}
+			}
 		}
 	}
 }

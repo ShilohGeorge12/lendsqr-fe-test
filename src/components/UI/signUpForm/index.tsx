@@ -41,7 +41,7 @@ export function SignUpForm() {
 		startTransition(async () => {
 			dispatch({ type: 'isLoggedIn', payload: { loggedIn: true, user: { email: formData.email } } });
 			setFormData(initState);
-			push('/dashboard');
+			push('/dashboard/users');
 		});
 	};
 

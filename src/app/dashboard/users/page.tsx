@@ -1,8 +1,9 @@
+import './page-style.scss';
+
 export default async function DashboardUser() {
 	return (
-		<main className={`dashboard-user`}>
+		<section className="dashboard-content">
 			<div className=""></div>
-			<div className=""></div>
-		</main>
+		</section>
 	);
 }

@@ -11,10 +11,7 @@ html {
 		margin-left: 2px;
 	}
 	p {
-		margin-top: 2px;
-		margin-bottom: 2px;
-		margin-right: 2px;
-		margin-left: 2px;
+		margin: 0px;
 	}
 }
 
@@ -24,4 +21,34 @@ body {
 	font-size: 1rem;
 	font-family: var(--font-avenir-regular);
 	box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 4px;
+	border-radius: 16px;
+	background: transparent;
+	transition-property: all;
+	transition-duration: 500ms;
+	transition-timing-function: ease-in-out;
+	outline: 0px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	outline: 0px;
+	border-radius: 6px;
+	background: lighten($font-color3, 30%);
+	transition-property: all;
+	transition-duration: 500ms;
+	transition-timing-function: ease-in-out;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	outline: 0px;
+	background: lighten($font-color3, 10%);
+	transition-property: all;
+	transition-duration: 500ms;
+	transition-timing-function: ease-in-out;
 }
