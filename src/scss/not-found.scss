@@ -1,0 +1,113 @@
+@import './mixins.scss';
+
+.notfound-main-container {
+	width: 100%;
+	height: 99dvh;
+	display: grid;
+	grid-template-rows: 5dvh 95dvh;
+
+	.notfound-logo {
+		img {
+			width: 150px;
+			height: 30px;
+		}
+		@media (max-width: 640px) {
+		}
+	}
+}
+.dashboard-notfound-container {
+	width: 100%;
+	height: 100%;
+	@include flex-row(16px, center, center);
+	@media (max-width: 640px) {
+		@include flex-column(16px, center, center);
+	}
+	img {
+		transition-duration: 500ms;
+		transition-property: all;
+		transition-timing-function: ease-in-out;
+		object-fit: cover;
+		&.dashboard-notfound-image-dashboard-user {
+			width: 290px;
+			height: 290px;
+		}
+		&.dashboard-notfound-image {
+			width: 390px;
+			height: 390px;
+		}
+
+		@media (max-width: 640px) {
+			&.dashboard-notfound-image-dashboard-user,
+			&.dashboard-notfound-image {
+				width: 150px;
+				height: 150px;
+			}
+		}
+
+		&:hover {
+			transform: scale(1.05);
+		}
+	}
+
+	.dashboard-notfound-flexbox {
+		@include flex-row(20px, center, center);
+		@media (max-width: 640px) {
+			@include flex-column(20px, center, center);
+		}
+		hr {
+			width: 5px;
+			height: 220px;
+			border-radius: 5px;
+			background: darken($border-color, 15%);
+			outline: none;
+			border-width: 0px;
+			@media (max-width: 640px) {
+				height: 5px;
+				width: 90%;
+			}
+		}
+
+		.dashboard-notfound-textbox {
+			@include flex-column(15px, center, flex-start);
+			@media (max-width: 640px) {
+				@include flex-column(15px, center, center);
+			}
+
+			p {
+				font-size: 1.125rem /* 18px */;
+				line-height: 1.75rem /* 28px */;
+				font-weight: bold;
+				letter-spacing: 2px;
+				color: $font-color3;
+				@media (max-width: 640px) {
+					width: 95%;
+					text-align: center;
+					font-size: 0.875rem /* 14px */;
+					line-height: 1.25rem /* 20px */;
+				}
+			}
+			a {
+				width: 188px;
+				height: 40px;
+				transition-duration: 500ms;
+				transition-property: all;
+				transition-timing-function: ease-in-out;
+				color: $font-color3;
+				background: $border-color;
+				border-width: 2px;
+				border-color: darken($border-color, 10%);
+				outline: 0px;
+				border-radius: 10px;
+				letter-spacing: 0.5px;
+				font-size: 0.85rem;
+				font-weight: 600;
+				@include flex-row(1px, center, center);
+				text-decoration: none;
+
+				&:hover {
+					transform: scale(1.05);
+				}
+			}
+		}
+	}
+}

@@ -1,16 +1,23 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { FaHome } from 'react-icons/fa';
 import { IoIosMenu } from 'react-icons/io';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 
-import { BreifCase1, ChartBar, DecisionModels, Loan, Sliders, User1, UserCog, UserFreinds } from '@/components/svg';
-import { Bank, CoinSolid, Galazy, Group104, IconSvg, PiggyBank, Scroll, UserCheck, UserTimes } from '@/components/svg/svgs2';
+
+import {
+    BreifCase1, ChartBar, DecisionModels, Loan, Sliders, User1, UserCog, UserFreinds
+} from '@/components/svg';
+import {
+    Bank, CoinSolid, Galazy, Group104, IconSvg, PiggyBank, Scroll, UserCheck, UserTimes
+} from '@/components/svg/svgs2';
 import { Badge, ClipBoard } from '@/components/svg/svgs3';
+
+
 import { useGlobals } from '@/context';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export function MobileNavBar() {
 	const {
@@ -185,7 +192,8 @@ export function MobileNavBar() {
 								<Link
 									key={customer.id}
 									href={customer.href}
-									className={path === customer.href ? 'active' : ''}>
+									className={path === customer.href ? 'active' : ''}
+									onClick={() => dispatch({ type: 'nav_menu_close' })}>
 									<customer.icon />
 									<p className="">{customer.text}</p>
 								</Link>
@@ -199,7 +207,8 @@ export function MobileNavBar() {
 								<Link
 									key={business.id}
 									href={business.href}
-									className={path === business.href ? 'active' : ''}>
+									className={path === business.href ? 'active' : ''}
+									onClick={() => dispatch({ type: 'nav_menu_close' })}>
 									<business.icon />
 									<p className="">{business.text}</p>
 								</Link>
@@ -212,7 +221,8 @@ export function MobileNavBar() {
 								<Link
 									key={setting.id}
 									href={setting.href}
-									className={path === setting.href ? 'active' : ''}>
+									className={path === setting.href ? 'active' : ''}
+									onClick={() => dispatch({ type: 'nav_menu_close' })}>
 									<setting.icon />
 									<p className="">{setting.text}</p>
 								</Link>

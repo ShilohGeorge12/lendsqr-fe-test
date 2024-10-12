@@ -1,0 +1,103 @@
+@import './mixins.scss';
+
+.dashboard-error {
+	width: 100%;
+	height: 90dvh;
+	@include flex-column(1px, flex-start, flex-start);
+	.dashboard-error-contanier {
+		width: 100%;
+		height: 100%;
+		@include flex-row(16px, center, center);
+		@media (max-width: 640px) {
+			@include flex-column(16px, center, center);
+		}
+
+		img {
+			width: 210px;
+			height: 210px;
+			transition-duration: 500ms;
+			transition-property: all;
+			transition-timing-function: ease-in-out;
+			&:hover {
+				transform: scale(1.05);
+			}
+		}
+
+		.dashboard-error-flexbox {
+			@include flex-row(20px, center, center);
+			@media (max-width: 640px) {
+				width: 100%;
+				@include flex-column(16px, center, center);
+			}
+			hr {
+				width: 5px;
+				height: 220px;
+				border-radius: 5px;
+				background: darken($border-color, 15%);
+				outline: none;
+				border-width: 0px;
+				@media (max-width: 640px) {
+					width: 90%;
+					height: 5px;
+				}
+			}
+			.dashboard-error-textbox {
+				@include flex-column(15px, center, flex-start);
+				@media (max-width: 640px) {
+					width: 90%;
+					@include flex-column(15px, center, center);
+				}
+				p {
+					font-size: 1.125rem /* 18px */;
+					line-height: 1.75rem /* 28px */;
+					font-weight: bold;
+					letter-spacing: 2px;
+					color: $font-color3;
+					@media (max-width: 640px) {
+						font-size: 0.875rem /* 14px */;
+						line-height: 1.25rem /* 20px */;
+					}
+				}
+
+				button {
+					width: 88px;
+					height: 40px;
+					transition-duration: 500ms;
+					transition-property: all;
+					transition-timing-function: ease-in-out;
+					color: $font-color3;
+					background: $border-color;
+					border-width: 2px;
+					border-color: darken($border-color, 10%);
+					outline: 0px;
+					border-radius: 10px;
+					letter-spacing: 1px;
+					font-size: 0.85rem;
+					font-weight: 500;
+
+					&:hover {
+						transform: scale(1.05);
+					}
+				}
+
+				a {
+					text-decoration: none;
+					color: $font-color3;
+					letter-spacing: 1px;
+					font-size: 1rem;
+					line-height: 1rem;
+					font-weight: bold;
+					@include flex-row(1px, center, center);
+					transition-duration: 700ms;
+					transition-property: all;
+					transition-timing-function: ease-in-out;
+					&:hover {
+						text-decoration: underline;
+						text-underline-offset: 2px;
+						text-decoration-color: $font-color3;
+					}
+				}
+			}
+		}
+	}
+}
