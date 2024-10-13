@@ -83,13 +83,13 @@ export function UserTable() {
 	return (
 		<>
 			{error && <div>Error loading users. Please try again.</div>}
-			{data && (
+			{!data && (
 				<div className="loading-data">
 					<Spinner height />
 				</div>
 			)}
 
-			{!data && (
+			{data && (
 				<>
 					<ul className="dashboard-users-table">
 						<li className="dashboard-users-table-organization">

@@ -7,6 +7,7 @@
 	padding-left: 30px;
 	padding-right: 30px;
 	padding-bottom: 20px;
+	padding-bottom: 20px;
 
 	@media (max-width: 640px) {
 		padding-left: 5px;
@@ -73,11 +74,11 @@
 
 	.dashboard-users-table {
 		width: 950px;
-		height: 800px;
+		height: 900px;
 		box-shadow: 3px 5px 20px 0px #0000000a;
 		background: white;
 		border-radius: 10px;
-		padding: 10px 30px;
+		padding: 22px 25px;
 		font-family: $font--work-sans-regular;
 
 		display: grid;
@@ -196,6 +197,7 @@
 			.dashboard-users-table-user-field-email,
 			.dashboard-users-table-user-field-phonenumber,
 			.dashboard-users-table-user-field-datejoined {
+				width: 100%;
 				@include flex-row(4px, flex-start, center);
 				grid-column: span 2 / span 2;
 				font-size: 0.875rem;
@@ -210,6 +212,12 @@
 					white-space: nowrap;
 					padding: 0px 1px;
 				}
+			}
+			.dashboard-users-table-user-field-email {
+				text-wrap: wrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 
 			.dashboard-users-table-user-field-status {
