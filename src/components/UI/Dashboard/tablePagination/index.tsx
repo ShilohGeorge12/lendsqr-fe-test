@@ -67,10 +67,12 @@ export function DashboardTablePagination({ users }: DashboardTablePaginationProp
 			':hover': {
 				backgroundColor: state.isSelected ? '#213f7d' : '#213f7d1a',
 			},
+			'height': '30px',
 		}),
 		control: (provided) => ({
 			...provided,
 			border: '1px solid #213f7d',
+			height: '30px',
 		}),
 	};
 
@@ -87,17 +89,17 @@ export function DashboardTablePagination({ users }: DashboardTablePaginationProp
 					value={currentOption}
 					onChange={handleSelectChange}
 				/>
-				<p>out of {users.length}</p>
+				<p>Out of {users.length}</p>
 			</div>
 			<ReactPaginate
+				className={'pagination-ul'}
+				pageClassName={'pagination-li'}
 				breakLabel="...."
 				nextLabel={<ArrowRight />}
 				previousLabel={<ArrowLeft />}
-				className={'pagination-ul'}
-				pageClassName={'pagination-li'}
 				onPageChange={handlePageClick}
-				marginPagesDisplayed={3}
-				pageRangeDisplayed={0}
+				marginPagesDisplayed={2}
+				pageRangeDisplayed={1}
 				pageCount={pageCount}
 				renderOnZeroPageCount={null}
 			/>

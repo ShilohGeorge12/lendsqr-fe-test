@@ -7,26 +7,47 @@
 	padding-left: 30px;
 	padding-right: 30px;
 
+	@media (max-width: 640px) {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+
 	.dashboard-users-user-section {
 		padding-top: 35px;
 		color: $font-color-main;
 		font-size: 1.5rem;
 		font-weight: 500;
 		line-height: 28.15px;
+		@media (max-width: 640px) {
+			padding-top: 25px;
+			padding-left: 12px;
+			font-size: 1rem;
+			line-height: auto;
+		}
 	}
 
 	.dashboard-users-cards-container {
 		width: 100%;
-		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 20px;
 		align-items: center;
+		@media (max-width: 640px) {
+			width: 100%;
+			justify-items: center;
+			grid-template-columns: repeat(2, 1fr);
+		}
 
 		.dashboard-users-cards {
-			width: 180px;
+			width: 190px;
 			height: 120px;
 			padding: 20px;
 			background: white;
 			@include flex-column(10px, center, flex-start);
+			@media (max-width: 640px) {
+				width: 120px;
+				height: 110px;
+			}
 			p {
 				font-family: $font--work-sans-regular;
 				color: $font-color-main;
@@ -34,11 +55,17 @@
 
 			.dashboard-users-cards-title {
 				font-weight: 400;
-				font-size: 14px;
+				font-size: 0.875rem;
+				@media (max-width: 640px) {
+					font-size: 0.75rem;
+				}
 			}
 			.dashboard-users-cards-numbers {
 				font-weight: 600;
-				font-size: 24px;
+				font-size: 1.5rem;
+				@media (max-width: 640px) {
+					font-size: 1rem;
+				}
 			}
 		}
 	}
@@ -54,7 +81,11 @@
 
 		display: grid;
 		grid-template-columns: repeat(12, 1fr);
-		gap: 1px;
+		gap: 12px;
+		@media (max-width: 640px) {
+			width: 98%;
+			padding: 10px 5px;
+		}
 
 		li {
 			list-style-type: none;
@@ -65,34 +96,88 @@
 		.dashboard-users-table-email,
 		.dashboard-users-table-phonenumber,
 		.dashboard-users-table-datejoined {
-			@include flex-row(4px, flex-start, center);
+			height: 100%;
+			width: 100%;
+			@include flex-row(8px, flex-start, center);
 			grid-column: span 2 / span 2;
-			font-size: 0.75rem;
-			font-weight: 600;
 			color: $font-color-main;
+
+			p {
+				width: fit-content;
+				font-size: 0.75rem;
+				font-weight: 600;
+				@media (max-width: 640px) {
+					width: 100%;
+					font-size: 0.6rem;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					padding: 0px 1px;
+				}
+			}
+
 			span {
 				font-size: 1rem;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding-bottom: 5px;
+				@media (max-width: 640px) {
+					font-size: 0.75rem;
+				}
 			}
 		}
 
 		.dashboard-users-table-status {
-			grid-column: span 2 / span 2; // Takes 2 columns in the parent grid
+			grid-column: span 2 / span 2;
 			display: grid;
-			grid-template-columns: repeat(3, 1fr); // Defines 3 equal columns for its children
-			gap: 10px; // Optional: add gap between the columns if needed
+			grid-template-columns: repeat(3, 1fr);
+			gap: 10px;
 			font-size: 0.75rem;
 			font-weight: 600;
+			@media (max-width: 640px) {
+				grid-template-columns: repeat(3, 1fr);
+				gap: 0px;
+			}
 			p {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-
-				grid-column: span 2 / span 2; // Takes 2 columns in the parent grid
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				place-items: center;
+				grid-column: span 2 / span 2;
 				color: $font-color-main;
 				gap: 4px;
-			}
-			span {
-				font-size: 1rem;
+
+				@media (max-width: 640px) {
+					grid-template-columns: repeat(3, 1fr);
+					grid-column: span 3 / span 3;
+				}
+				span {
+					@media (max-width: 640px) {
+						grid-column: span 2 / span 2; // Takes 2 columns in the parent grid
+						width: 100%;
+						font-size: 0.6rem;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						padding: 0px 1px;
+					}
+				}
+				.icon {
+					width: 100%;
+					display: flex;
+					align-items: center;
+					justify-content: flex-start;
+					font-size: 1rem;
+					padding-bottom: 5px;
+					@media (max-width: 640px) {
+						font-size: 0.75rem;
+						grid-column: span 1 / span 1;
+					}
+				}
+				// font-size: 1rem;
+				// @media (max-width: 640px) {
+				// 	grid-column: span 1 / span 1; // Takes 3 columns in the parent grid
+				// }
 			}
 		}
 
@@ -115,6 +200,15 @@
 				font-size: 0.875rem;
 				font-weight: 400;
 				color: $font-color-main;
+
+				@media (max-width: 640px) {
+					width: 100%;
+					font-size: 0.6rem;
+					overflow: hidden;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					padding: 0px 1px;
+				}
 			}
 
 			.dashboard-users-table-user-field-status {
@@ -124,17 +218,33 @@
 				gap: 10px;
 				grid-column-start: 11;
 				padding-left: 20px;
+				@media (max-width: 640px) {
+					padding-left: 0px;
+					grid-column: span 2 / span 2;
+					gap: 1px;
+				}
 				.dashboard-users-table-user-field-status-details {
 					display: grid;
 					align-items: center;
 					justify-content: flex-start;
 					grid-column: span 2 / span 2;
+					@media (max-width: 640px) {
+						overflow: hidden;
+					}
 					span {
 						padding: 10px 20px;
 						background: $border-color;
 						border-radius: 30px;
 						font-size: 0.875rem;
 						font-weight: 400;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						@media (max-width: 640px) {
+							padding: 5px 5px;
+							border-radius: 5px;
+							font-size: 0.6rem;
+						}
 						&.Inactive {
 							color: $font-color;
 							background: lighten($font-color, 55%);
@@ -143,17 +253,29 @@
 							color: $font-color4;
 							letter-spacing: 0.5px;
 							background: lighten($font-color4, 45%);
+							@media (max-width: 640px) {
+								padding: 5px 5px;
+								border-radius: 8px;
+							}
 						}
 						&.blacklisted {
 							padding: 10px 13px;
 							color: $font-color5;
 							letter-spacing: 0.5px;
 							background: lighten($font-color5, 50%);
+							@media (max-width: 640px) {
+								padding: 5px 5px;
+								border-radius: 8px;
+							}
 						}
 						&.active {
 							color: $font-color6;
 							letter-spacing: 0.5px;
 							background: lighten($font-color6, 40%);
+							@media (max-width: 640px) {
+								padding: 5px 5px;
+								border-radius: 8px;
+							}
 						}
 					}
 				}
@@ -168,55 +290,112 @@
 	.dashboard-users-table-pagination {
 		width: 100%;
 		height: 40px;
-		background: white;
+		// background: white;
 		display: grid;
 		grid-template-columns: repeat(10, 1fr);
+		align-items: center;
+		color: $font-color-main;
+		@media (max-width: 640px) {
+			height: 50px;
+		}
+		.dashboard-users-items {
+			grid-column: span 3 / span 3;
+			height: 40px;
+			@include flex-row(15px, center, center);
+			@media (max-width: 640px) {
+				grid-column: span 5 / span 5;
+				gap: 5px;
+				height: 45px;
+
+				p {
+					width: 100%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 0.7rem;
+					font-weight: 500;
+					grid-column: span 1 / span 1;
+				}
+
+				div {
+					width: 100%;
+					grid-column: span 3 / span 3;
+				}
+			}
+
+			.dashboard-users-items-select__control {
+				width: 100px;
+				height: 40px;
+				outline: none; // Remove default blue outline
+				box-shadow: none; // Remove shadow around the control
+				outline-width: 0px;
+				font-weight: 600;
+				border: 1px solid #213f7d1a;
+				color: #213f7d1a;
+				background-color: #213f7d1a;
+				transition-property: all;
+				transition-duration: 500ms;
+				transition-timing-function: ease-in-out;
+				@media (max-width: 640px) {
+					width: 100%;
+					height: 25px !important;
+					font-size: 0.8rem;
+				}
+				.dashboard-users-items-select__value {
+					width: 60%;
+				}
+				.dashboard-users-items-select__indicators {
+					width: 40%;
+					span {
+						display: hidden;
+					}
+				}
+			}
+		}
 
 		.pagination-ul {
 			grid-column: span 4 / span 4;
 			grid-column-start: 7;
+			width: 97%;
 			height: 40px;
 			margin: 0px;
-
-			@include flex-row(10px, center, center);
+			display: flex;
+			align-items: center;
+			justify-content: end;
+			gap: 12px;
 			list-style-type: none;
 			color: $font-color-main;
 			font-weight: 400;
+			padding-left: 0px;
+			padding-right: 10px;
+
+			@media (max-width: 640px) {
+				width: 98%;
+				grid-column: span 5 / span 5;
+				grid-column-start: 6;
+				padding-right: 7px;
+				height: 45px;
+				gap: 8px;
+			}
+
 			.previous,
 			.next {
 				width: 24px;
 				height: 24px;
-				font-size: 1rem;
 				color: $font-color-main;
 				background: $border-color;
 				border-radius: 5px;
-				@include flex-row(5px, center, center);
+				@include flex-row(1px, center, center);
+				@media (max-width: 640px) {
+					width: 24px;
+					height: 24px;
+				}
 				a {
 					width: 100%;
 					height: 100%;
 					text-decoration: none;
 					@include flex-row(5px, center, center);
 				}
-			}
-		}
-		.dashboard-users-items {
-			grid-column: span 3 / span 3;
-			height: 40px;
-			@include flex-row(15px, center, center);
-
-			.dashboard-users-items-select__control {
-				width: 100px;
-				height: 40px;
-				outline: 'none'; // Remove default blue outline
-				box-shadow: 'none'; // Remove shadow around the control
-				outline-width: '0px';
-				font-weight: '600';
-				border: 1px solid #213f7d1a;
-				color: #213f7d1a;
-				background-color: '#213F7D1A';
-				transition-property: 'all';
-				transition-duration: '500ms';
-				transition-timing-function: 'ease-in-out';
 			}
 		}
 	}

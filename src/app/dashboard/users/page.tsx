@@ -113,39 +113,39 @@ export default async function DashboardUser() {
 
 			<ul className="dashboard-users-table">
 				<li className="dashboard-users-table-organization">
-					ORGANIZATION
+					<p>ORGANIZATION</p>
 					<span>
 						<RiFilter3Line />
 					</span>
 				</li>
 				<li className="dashboard-users-table-username">
-					USERNAME
+					<p>USERNAME</p>
 					<span>
 						<RiFilter3Line />
 					</span>
 				</li>
 				<li className="dashboard-users-table-email">
-					EMAIL
+					<p>EMAIL</p>
 					<span>
 						<RiFilter3Line />
 					</span>
 				</li>
 				<li className="dashboard-users-table-phonenumber">
-					PHONE NUMBER
+					<p>PHONE NUMBER</p>
 					<span>
 						<RiFilter3Line />
 					</span>
 				</li>
 				<li className="dashboard-users-table-datejoined">
-					DATE JOINED
+					<p>DATE JOINED</p>
 					<span>
 						<RiFilter3Line />
 					</span>
 				</li>
 				<li className="dashboard-users-table-status">
 					<p>
-						STATUS
-						<span>
+						<span>STATUS</span>
+						<span className="icon">
 							<RiFilter3Line />
 						</span>
 					</p>
