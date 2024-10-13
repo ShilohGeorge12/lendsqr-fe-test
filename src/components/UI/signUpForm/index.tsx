@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useState, useTransition } from 'react';
 import { FaSpinner } from 'react-icons/fa';
-import { z } from 'zod';
 
 import { useGlobals } from '@/context';
+import { z } from 'zod';
 
 const schema = z.object({
 	email: z.string().email(),
@@ -87,11 +87,13 @@ export function SignUpForm() {
 						{viewPassword ? 'Show' : 'No Show'}
 					</button>
 				</div>
+
 				<Link
 					className="sign-in-col-2-link"
 					href={'/'}>
 					FORGOT PASSWORD?
 				</Link>
+
 				<button
 					type="submit"
 					name={`submit sign in details`}
