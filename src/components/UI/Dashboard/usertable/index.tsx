@@ -42,11 +42,11 @@ export function UserTable() {
 	// Pagination State
 	const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
 	const [currentOption, setCurrentOption] = useState<{ value: string; label: string } | null>(null);
-	const [itemsPerPage, setItemsPerPage] = useState<number>(5);
+	const [itemsPerPage, setItemsPerPage] = useState<number>(10);
 	const [itemOffset, setItemOffset] = useState(0);
 
 	useEffect(() => {
-		const generatedOptions = [5, 10, 15].map((value) => ({
+		const generatedOptions = [10, 15].map((value) => ({
 			value: `${value}`,
 			label: `${value}`,
 		}));
@@ -68,8 +68,6 @@ export function UserTable() {
 	const currentItems = useMemo(() => {
 		return users.slice(itemOffset, itemOffset + itemsPerPage);
 	}, [users, itemOffset, itemsPerPage]);
-	// const currentItems = users.slice(itemOffset, itemOffset + itemsPerPage);
-	// const pageCount = Math.ceil(users.length / itemsPerPage);
 
 	const pageCount = useMemo(() => {
 		return Math.ceil(users.length / itemsPerPage);
