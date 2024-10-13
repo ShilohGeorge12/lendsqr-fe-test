@@ -4,11 +4,75 @@ import { createContext, ReactNode, useContext, useReducer } from 'react';
 
 import type { State, ReducerType, stateAction } from '../types';
 
+// const users: State['user'][] = [
+// 	{
+// 		id: '1',
+// 		organization: 'Lendsqr',
+// 		username: 'Adedeji',
+// 		email: 'adedeji@lendsqr.com',
+// 		phoneNumber: '08078903721',
+// 		DateJoined: 'May 15, 2020 10:00 AM',
+// 		status: 'Inactive',
+// 	},
+// 	{
+// 		id: '2',
+// 		organization: 'Lendsqr',
+// 		username: 'Adedeji',
+// 		email: 'adedeji@lendsqr.com',
+// 		phoneNumber: '08078903721',
+// 		DateJoined: 'May 15, 2020 10:00 AM',
+// 		status: 'Inactive',
+// 	},
+// 	{
+// 		id: '3',
+// 		organization: 'Lendsqr',
+// 		username: 'Adedeji',
+// 		email: 'adedeji@lendsqr.com',
+// 		phoneNumber: '08078903721',
+// 		DateJoined: 'May 15, 2020 10:00 AM',
+// 		status: 'Blacklisted',
+// 	},
+// 	{
+// 		id: '4',
+// 		organization: 'Lendsqr',
+// 		username: 'Adedeji',
+// 		email: 'adedeji@lendsqr.com',
+// 		phoneNumber: '08078903721',
+// 		DateJoined: 'May 15, 2020 10:00 AM',
+// 		status: 'Pending',
+// 	},
+// 	{
+// 		id: '5',
+// 		organization: 'Lendsqr',
+// 		username: 'Adedeji',
+// 		email: 'adedeji@lendsqr.com',
+// 		phoneNumber: '08078903721',
+// 		DateJoined: 'May 15, 2020 10:00 AM',
+// 		status: 'Active',
+// 	},
+// 	{
+// 		id: '6',
+// 		organization: 'Lendsqr',
+// 		username: 'Adedeji',
+// 		email: 'adedeji@lendsqr.com',
+// 		phoneNumber: '08078903721',
+// 		DateJoined: 'May 15, 2020 10:00 AM',
+// 		status: 'Blacklisted',
+// 	},
+// ];
+
 const initState: State = {
 	isLoggedIn: false,
 	nav_menu: 'close',
+	users: [],
 	user: {
+		_id: '',
+		organization: 'Lendsqr',
+		username: '',
 		email: '',
+		phoneNumber: '',
+		DateJoined: '',
+		status: 'Inactive',
 	},
 };
 
@@ -19,6 +83,8 @@ const MyContext = createContext({
 
 const reducer: ReducerType = (state, action) => {
 	switch (action.type) {
+		case 'users':
+			return { ...state, users: action.payload.users };
 		case 'isLoggedIn':
 			return { ...state, isLoggedIn: action.payload.loggedIn, user: { ...state.user, email: action.payload.user.email } };
 		case 'isLoggedOut':

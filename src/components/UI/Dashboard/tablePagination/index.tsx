@@ -1,63 +1,25 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import Select, { GroupBase, StylesConfig } from 'react-select';
 
 import { ArrowLeft, ArrowRight } from '@/components/svg/svgs3';
 
-import { USER } from '@/types';
-
 interface DashboardTablePaginationProps {
-	users: USER[];
+	options: { value: string; label: string }[];
+	currentOption: { value: string; label: string } | null;
+	handleSelectChange: (
+		option: {
+			value: string;
+			label: string;
+		} | null
+	) => void;
+	handlePageClick: (event: { selected: number }) => void;
+	pageCount: number;
+	totalUsers: number;
 }
 
-export function DashboardTablePagination({ users }: DashboardTablePaginationProps) {
-	// State for options for select
-	const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
-	const [currentOption, setCurrentOption] = useState<{ value: string; label: string } | null>(null);
-
-	// itemsPerPage now linked with currentOption
-	const [itemsPerPage, setItemsPerPage] = useState<number>(6);
-	const [itemOffset, setItemOffset] = useState(0);
-
-	useEffect(() => {
-		// Set options when component mounts
-		const generatedOptions = users.map((user, index) => ({
-			value: `${index + 1}`,
-			label: `${index + 1}`,
-		}));
-		setOptions(generatedOptions);
-		setCurrentOption(generatedOptions[generatedOptions.length - 1]);
-	}, [users]);
-
-	// Update itemsPerPage when select changes
-	const handleSelectChange = (option: { value: string; label: string } | null) => {
-		if (option) {
-			setCurrentOption(option);
-			setItemsPerPage(parseInt(option.value)); // Update itemsPerPage to reflect selected value
-		}
-	};
-
-	useEffect(() => {
-		// When itemsPerPage changes, ensure currentOption is updated
-		const updatedOption = options.find((opt) => parseInt(opt.value) === itemsPerPage);
-		if (updatedOption) {
-			setCurrentOption(updatedOption);
-		}
-	}, [itemsPerPage, options]);
-
-	// Calculate pagination
-	const endOffset = itemOffset + itemsPerPage;
-	const currentItems = users.slice(itemOffset, endOffset);
-	const pageCount = Math.ceil(users.length / itemsPerPage);
-
-	const handlePageClick = (event: { selected: number }) => {
-		const newOffset = (event.selected * itemsPerPage) % users.length;
-		setItemOffset(newOffset);
-	};
-
-	// Custom styles for react-select
+export function DashboardTablePagination({ currentOption, pageCount, options, totalUsers, handlePageClick, handleSelectChange }: DashboardTablePaginationProps) {
 	const customStyles: StylesConfig<{ value: string; label: string }, false, GroupBase<{ value: string; label: string }>> = {
 		option: (provided, state) => ({
 			...provided,
@@ -89,7 +51,7 @@ export function DashboardTablePagination({ users }: DashboardTablePaginationProp
 					value={currentOption}
 					onChange={handleSelectChange}
 				/>
-				<p>Out of {users.length}</p>
+				<p>Out of {totalUsers}</p>
 			</div>
 			<ReactPaginate
 				className={'pagination-ul'}

@@ -6,7 +6,7 @@
 	@include flex-column(1px, flex-start, flex-start);
 	.dashboard-error-contanier {
 		width: 100%;
-		height: 100%;
+		height: 90dvh;
 		@include flex-row(16px, center, center);
 		@media (max-width: 640px) {
 			@include flex-column(16px, center, center);
