@@ -1,5 +1,223 @@
 @import '../../../scss/mixins.scss';
 
 .dashboard-users {
-	background: red;
+	@include flex-column(12px);
+	background: lighten($border-color, 40%);
+	font-family: $font--work-sans-regular;
+	padding-left: 30px;
+	padding-right: 30px;
+
+	.dashboard-users-user-section {
+		padding-top: 35px;
+		color: $font-color-main;
+		font-size: 1.5rem;
+		font-weight: 500;
+		line-height: 28.15px;
+	}
+
+	.dashboard-users-cards-container {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.dashboard-users-cards {
+			width: 180px;
+			height: 120px;
+			padding: 20px;
+			background: white;
+			@include flex-column(10px, center, flex-start);
+			p {
+				font-family: $font--work-sans-regular;
+				color: $font-color-main;
+			}
+
+			.dashboard-users-cards-title {
+				font-weight: 400;
+				font-size: 14px;
+			}
+			.dashboard-users-cards-numbers {
+				font-weight: 600;
+				font-size: 24px;
+			}
+		}
+	}
+
+	.dashboard-users-table {
+		width: 950px;
+		height: 640px;
+		box-shadow: 3px 5px 20px 0px #0000000a;
+		background: white;
+		border-radius: 10px;
+		padding: 10px 30px;
+		font-family: $font--work-sans-regular;
+
+		display: grid;
+		grid-template-columns: repeat(12, 1fr);
+		gap: 1px;
+
+		li {
+			list-style-type: none;
+			font-family: $font--work-sans-regular !important;
+		}
+		.dashboard-users-table-organization,
+		.dashboard-users-table-username,
+		.dashboard-users-table-email,
+		.dashboard-users-table-phonenumber,
+		.dashboard-users-table-datejoined {
+			@include flex-row(4px, flex-start, center);
+			grid-column: span 2 / span 2;
+			font-size: 0.75rem;
+			font-weight: 600;
+			color: $font-color-main;
+			span {
+				font-size: 1rem;
+			}
+		}
+
+		.dashboard-users-table-status {
+			grid-column: span 2 / span 2; // Takes 2 columns in the parent grid
+			display: grid;
+			grid-template-columns: repeat(3, 1fr); // Defines 3 equal columns for its children
+			gap: 10px; // Optional: add gap between the columns if needed
+			font-size: 0.75rem;
+			font-weight: 600;
+			p {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				grid-column: span 2 / span 2; // Takes 2 columns in the parent grid
+				color: $font-color-main;
+				gap: 4px;
+			}
+			span {
+				font-size: 1rem;
+			}
+		}
+
+		.dashboard-users-table-user-field {
+			display: grid;
+			grid-template-columns: subgrid;
+			grid-column: span 12 / span 12;
+			border-bottom: 2px solid lighten($border-color, 20%);
+			&:last-child {
+				border-bottom: 0px solid lighten($border-color, 20%);
+			}
+
+			.dashboard-users-table-user-field-organization,
+			.dashboard-users-table-user-field-username,
+			.dashboard-users-table-user-field-email,
+			.dashboard-users-table-user-field-phonenumber,
+			.dashboard-users-table-user-field-datejoined {
+				@include flex-row(4px, flex-start, center);
+				grid-column: span 2 / span 2;
+				font-size: 0.875rem;
+				font-weight: 400;
+				color: $font-color-main;
+			}
+
+			.dashboard-users-table-user-field-status {
+				grid-column: span 2 / span 2;
+				display: grid;
+				grid-template-columns: repeat(3, 1fr); // Defines 3 equal columns for its children
+				gap: 10px;
+				grid-column-start: 11;
+				padding-left: 20px;
+				.dashboard-users-table-user-field-status-details {
+					display: grid;
+					align-items: center;
+					justify-content: flex-start;
+					grid-column: span 2 / span 2;
+					span {
+						padding: 10px 20px;
+						background: $border-color;
+						border-radius: 30px;
+						font-size: 0.875rem;
+						font-weight: 400;
+						&.Inactive {
+							color: $font-color;
+							background: lighten($font-color, 55%);
+						}
+						&.pending {
+							color: $font-color4;
+							letter-spacing: 0.5px;
+							background: lighten($font-color4, 45%);
+						}
+						&.blacklisted {
+							padding: 10px 13px;
+							color: $font-color5;
+							letter-spacing: 0.5px;
+							background: lighten($font-color5, 50%);
+						}
+						&.active {
+							color: $font-color6;
+							letter-spacing: 0.5px;
+							background: lighten($font-color6, 40%);
+						}
+					}
+				}
+				.dashboard-users-table-user-field-status-options {
+					display: grid;
+					place-content: center;
+				}
+			}
+		}
+	}
+
+	.dashboard-users-table-pagination {
+		width: 100%;
+		height: 40px;
+		background: white;
+		display: grid;
+		grid-template-columns: repeat(10, 1fr);
+
+		.pagination-ul {
+			grid-column: span 4 / span 4;
+			grid-column-start: 7;
+			height: 40px;
+			margin: 0px;
+
+			@include flex-row(10px, center, center);
+			list-style-type: none;
+			color: $font-color-main;
+			font-weight: 400;
+			.previous,
+			.next {
+				width: 24px;
+				height: 24px;
+				font-size: 1rem;
+				color: $font-color-main;
+				background: $border-color;
+				border-radius: 5px;
+				@include flex-row(5px, center, center);
+				a {
+					width: 100%;
+					height: 100%;
+					text-decoration: none;
+					@include flex-row(5px, center, center);
+				}
+			}
+		}
+		.dashboard-users-items {
+			grid-column: span 3 / span 3;
+			height: 40px;
+			@include flex-row(15px, center, center);
+
+			.dashboard-users-items-select__control {
+				width: 100px;
+				height: 40px;
+				outline: 'none'; // Remove default blue outline
+				box-shadow: 'none'; // Remove shadow around the control
+				outline-width: '0px';
+				font-weight: '600';
+				border: 1px solid #213f7d1a;
+				color: #213f7d1a;
+				background-color: '#213F7D1A';
+				transition-property: 'all';
+				transition-duration: '500ms';
+				transition-timing-function: 'ease-in-out';
+			}
+		}
+	}
 }

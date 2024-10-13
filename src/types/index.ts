@@ -3,6 +3,16 @@ export interface UserType {
 	password: string;
 }
 
+export type USER = {
+	id: string;
+	organization: string;
+	username: string;
+	email: string;
+	phoneNumber: string;
+	DateJoined: string;
+	status: 'Active' | 'Inactive' | 'Blacklisted' | 'Pending';
+};
+
 // Context Types
 export type stateAction =
 	| { type: 'isLoggedIn'; payload: { loggedIn: true; user: { email: string } } }

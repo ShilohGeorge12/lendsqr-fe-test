@@ -303,6 +303,7 @@ header {
 	grid-template-columns: 283px auto;
 	@media (max-width: 640px) {
 		grid-template-columns: auto;
+		min-height: 92dvh;
 	}
 
 	nav {
@@ -316,7 +317,7 @@ header {
 		.nav-content-1 {
 			width: 80%;
 			padding-left: 20.25px;
-			@include flex-column(30px, flex-start, center);
+			@include flex-column(45px, flex-start, center);
 
 			.nav-breifcase1 {
 				width: 100%;
