@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import { UserTable } from '@/components/UI/Dashboard/usertable';
 
-import './users-style.scss';
+import '../dashboard-table.scss';
 
 export default async function DashboardUser() {
 	return (

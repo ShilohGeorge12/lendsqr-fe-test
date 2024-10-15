@@ -1,4 +1,4 @@
-@import '../../../scss/mixins.scss';
+@import '../../scss/mixins.scss';
 
 .dashboard-users {
 	@include flex-column(12px);
@@ -209,6 +209,22 @@
 					svg {
 						font-size: 18px;
 					}
+				}
+			}
+		}
+
+		tfoot {
+			tr {
+				height: 50px;
+				font-size: 14px;
+				font-weight: 600;
+				letter-spacing: 1px;
+				@media (max-width: 640px) {
+					font-size: 13px;
+				}
+				td {
+					text-align: center;
+					font-family: $font--work-sans-regular;
 				}
 			}
 		}

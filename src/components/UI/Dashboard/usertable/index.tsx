@@ -2,24 +2,20 @@
 
 import { redirect } from 'next/navigation';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { RiFilter3Line } from 'react-icons/ri';
 import { TbDotsVertical } from 'react-icons/tb';
+import Select from 'react-select/base';
 
 import { ActiveUser2, UserIcon1, UsersWithLoan, UsersWithSavings } from '@/components/svg/svgs3';
 import { DashboardTablePagination } from '@/components/UI/Dashboard/tablePagination';
+import { useFilterUsers } from '@/hooks/useFilterUsers';
+import { usePagination } from '@/hooks/usePagination';
 
-import { USER_WITHOUT_PASSWORD_TYPE } from '@/types';
-
-import { useGlobals } from '@/context';
 import { useAuthContext } from '@/utils/AuthProvider';
-import useSWR from 'swr';
+import { useFetchUsers } from '../../../../hooks/useFetchUsers';
 
 export function UserTable() {
-	const {
-		state: { users },
-		dispatch,
-	} = useGlobals();
 	const {
 		state: { isAuthenticated },
 		isAuthPending,
@@ -31,102 +27,12 @@ export function UserTable() {
 		}
 	}, [isAuthenticated, isAuthPending]);
 
-	const fetcher = async (url: string) => {
-		if (!isAuthenticated) {
-			return null;
-		}
-		const res = await fetch(url);
-		if (!res.ok) {
-			throw new Error('Failed to fetch data');
-		}
-		return res.json();
-	};
+	const { data, error, isLoading, users } = useFetchUsers(isAuthenticated);
+	const { filters, handleFilterChange, resetFilters, filteredUsers } = useFilterUsers({ users });
+	const { options, currentOption, handleSelectChange, pageCount, handlePageClick, itemOffset, itemsPerPage } = usePagination({ filteredUsers });
 
-	const { data, error, isLoading } = useSWR<USER_WITHOUT_PASSWORD_TYPE[], Error>('/users.json', fetcher);
-
-	const memoizedDispatch = useCallback(() => {
-		if (isAuthenticated && data && JSON.stringify(data) !== JSON.stringify(users)) {
-			dispatch({ type: 'users', payload: { users: data } });
-		}
-	}, [data, users]);
-
-	// Run the memoized dispatch logic inside the useEffect
-	useEffect(() => {
-		memoizedDispatch(); // Execute the dispatch if necessary
-	}, [memoizedDispatch]);
-
-	const [filters, setFilters] = useState({
-		organization: { value: '' },
-		username: { value: '' },
-		email: { value: '' },
-		phoneNumber: { value: '' },
-		status: { value: '' }, // 'None' for no filter
-	});
-
-	const handleFilterChange = (field: string, value: string) => {
-		setFilters((prev) => ({
-			...prev,
-			[field]: { value },
-		}));
-	};
-	const resetFilters = () => {
-		setFilters({
-			organization: { value: '' },
-			username: { value: '' },
-			email: { value: '' },
-			phoneNumber: { value: '' },
-			status: { value: '' },
-		});
-	};
-	const filteredUsers = useMemo(() => {
-		return users.filter((user) => {
-			return (
-				(filters.organization.value ? user.organization.toLowerCase().includes(filters.organization.value.toLowerCase()) : true) &&
-				(filters.username.value ? user.username.toLowerCase().includes(filters.username.value.toLowerCase()) : true) &&
-				(filters.email.value ? user.email.toLowerCase().includes(filters.email.value.toLowerCase()) : true) &&
-				(filters.phoneNumber.value ? user.phoneNumber.includes(filters.phoneNumber.value) : true) &&
-				(filters.status.value && filters.status.value !== 'None' ? user.status === filters.status.value : true)
-			);
-		});
-	}, [users, filters]);
-
-	// Pagination State
-	const [options, setOptions] = useState<{ value: string; label: string }[]>([]);
-	const [currentOption, setCurrentOption] = useState<{ value: string; label: string } | null>(null);
-	const [itemsPerPage, setItemsPerPage] = useState<number>(10);
-	const [itemOffset, setItemOffset] = useState(0);
-
-	const [showModal, setShowModal] = useState(false); // Modal visibility state
-
-	useEffect(() => {
-		const generatedOptions = [10, 15].map((value) => ({
-			value: `${value}`,
-			label: `${value}`,
-		}));
-
-		setOptions(generatedOptions);
-		setCurrentOption(generatedOptions[0]);
-	}, []);
-
-	const handleSelectChange = (option: { value: string; label: string } | null) => {
-		if (option && currentOption?.value !== option.value) {
-			const selectedValue = parseInt(option.value);
-			if ([5, 10, 15].includes(selectedValue)) {
-				setCurrentOption(option);
-				setItemsPerPage(selectedValue);
-			}
-		}
-	};
-
-	const pageCount = useMemo(() => {
-		return Math.ceil(filteredUsers.length / itemsPerPage);
-	}, [filteredUsers.length, itemsPerPage]);
-
-	const handlePageClick = (event: { selected: number }) => {
-		const newOffset = event.selected * itemsPerPage;
-		setItemOffset(newOffset);
-	};
-
+	// Modal state
+	const [showModal, setShowModal] = useState(false);
 	const activeUsers = useMemo(() => {
 		return users.filter((user) => user.status === 'Active').length;
 	}, [users]);
@@ -208,61 +114,47 @@ export function UserTable() {
 						</tr>
 					</thead>
 					<tbody>
-						{!isLoading &&
-							data &&
-							data.length > 0 &&
-							filteredUsers.length > 0 &&
-							filteredUsers.slice(itemOffset, itemOffset + itemsPerPage).map((user) => (
-								<tr
-									key={user._id}
-									className="dashboard-users-table-user-field">
-									<td>{user.organization}</td>
-									<td>{user.username}</td>
-									<td>{user.email}</td>
-									<td>{user.phoneNumber}</td>
-									<td>{user.DateJoined}</td>
-									<td>
-										<span
-											className={
-												user.status === 'Inactive' ? 'Inactive' : user.status === 'Pending' ? 'pending' : user.status === 'Blacklisted' ? 'blacklisted' : 'active'
-											}>
-											{user.status}
-										</span>
-									</td>
-									<td>
-										<TbDotsVertical />
-									</td>
-								</tr>
-							))}
+						{
+							// data &&
+							// 	data.length > 0 &&
+							filteredUsers &&
+								filteredUsers.length > 0 &&
+								filteredUsers.slice(itemOffset, itemOffset + itemsPerPage).map((user) => (
+									<tr
+										key={user._id}
+										className="dashboard-users-table-user-field">
+										<td>{user.organization}</td>
+										<td>{user.username}</td>
+										<td>{user.email}</td>
+										<td>{user.phoneNumber}</td>
+										<td>{user.DateJoined}</td>
+										<td>
+											<span
+												className={
+													user.status === 'Inactive' ? 'Inactive' : user.status === 'Pending' ? 'pending' : user.status === 'Blacklisted' ? 'blacklisted' : 'active'
+												}>
+												{user.status}
+											</span>
+										</td>
+										<td>
+											<TbDotsVertical />
+										</td>
+									</tr>
+								))
+						}
 					</tbody>
-					{/* <tfoot>
-					{!isLoading && data && data.length > 0 && filteredUsers.length === 0 && (
-						<tr className="dashboard-users-not-found">
-							<th
-								scope="row"
-								colSpan={4}>
-								No Users found.
-							</th>
-						</tr>
-					)}
-				</tfoot> */}
-
-					{/* {!data && (
-						<tr className="dashboard-users-not-found">
-							<th
-								scope="row"
-								colSpan={6}>
-								No Users found.
-							</th>
-						</tr>
-					)} */}
+					<tfoot>
+						{filteredUsers && filteredUsers.length === 0 && (
+							<tr className="dashboard-users-not-found">
+								<td
+									scope="row"
+									colSpan={6}>
+									No Users found.
+								</td>
+							</tr>
+						)}
+					</tfoot>
 				</table>
-
-				{!data && (
-					<section className="dashboard-users-not-found">
-						<p>No Users found.</p>
-					</section>
-				)}
 
 				{showModal && (
 					<section className="filtering-modal">
@@ -308,7 +200,16 @@ export function UserTable() {
 						</div>
 						<div className="filtering-modal-status">
 							<label htmlFor="status">Status</label>
-							{/* <Dropdown
+							{/* <Select
+					id={'react-select-2-live-region'}
+					menuPlacement="auto"
+					classNamePrefix={'dashboard-users-items-select'}
+					options={options}
+					styles={customStyles}
+					value={currentOption}
+					onChange={handleSelectChange}
+				/>
+							<Dropdown
 								placeholder="Select"
 								value={filters.status.value === '' ? 'None' : filters.status.value}
 								onChange={(e) => handleFilterChange('status', e.target.value)}
@@ -337,7 +238,7 @@ export function UserTable() {
 				)}
 
 				{/* {!isLoading && !data && ( */}
-				{!isLoading && data && data.length > 0 && (
+				{filteredUsers && filteredUsers.length > 0 && (
 					<DashboardTablePagination
 						totalUsers={users.length}
 						options={options}
