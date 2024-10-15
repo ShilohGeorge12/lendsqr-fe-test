@@ -1,10 +1,13 @@
 'use client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, FormEvent, useState, useTransition } from 'react';
+
+
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
 
-import { useGlobals } from '@/context';
+
+import { useAuthContext } from '@/utils/AuthProvider';
 import { z } from 'zod';
 
 const schema = z.object({
@@ -12,8 +15,12 @@ const schema = z.object({
 	password: z.string().min(6).max(15),
 });
 
-export function SignUpForm() {
-	const { dispatch } = useGlobals();
+export function SignInForm() {
+	const {
+		state: { isAuthenticated },
+		isAuthPending,
+		onLogin,
+	} = useAuthContext();
 	const initState: z.infer<typeof schema> = {
 		email: '',
 		password: '',
@@ -22,8 +29,6 @@ export function SignUpForm() {
 	const [formData, setFormData] = useState(initState);
 	const [errorMessage, setErrorMessage] = useState<string[]>([]);
 	const [viewPassword, setViewPassword] = useState(false);
-	const [isPending, startTransition] = useTransition();
-
 	const onChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { value, name } = e.target;
 		setFormData((prev) => ({ ...prev, [name]: value }));
@@ -38,12 +43,33 @@ export function SignUpForm() {
 			return;
 		}
 
-		startTransition(async () => {
-			dispatch({ type: 'isLoggedIn', payload: { loggedIn: true, user: { email: formData.email } } });
+		const fakeUser = {
+			token: '',
+			password: 'sg@133',
+			email: 'sg@gmail.com',
+			organization: 'Adedeji',
+			_id: 'testing_id',
+		};
+
+		if (isAuthenticated) {
 			setFormData(initState);
 			push('/dashboard/users');
+			return;
+		}
+		onLogin({
+			email: formData.email,
+			password: formData.password,
 		});
+
+		// sessionStorage.setItem('user', JSON.stringify(fakeUser));
+		// dispatch({ type: 'isLoggedIn', payload: { loggedIn: true, user: { email: formData.email } } });
 	};
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			push('/dashboard/users');
+		}
+	}, [isAuthenticated]);
 
 	return (
 		<form
@@ -63,7 +89,7 @@ export function SignUpForm() {
 					placeholder="Email"
 					value={formData.email}
 					onChange={onChange}
-					disabled={isPending}
+					disabled={isAuthPending}
 				/>
 
 				<div className="sign-in-col-2-password-input">
@@ -73,7 +99,7 @@ export function SignUpForm() {
 						name="password"
 						inputMode="text"
 						onChange={onChange}
-						disabled={isPending}
+						disabled={isAuthPending}
 						placeholder="Password"
 						value={formData.password}
 						type={viewPassword ? 'text' : 'password'}
@@ -97,14 +123,20 @@ export function SignUpForm() {
 				<button
 					type="submit"
 					name={`submit sign in details`}
-					disabled={isPending}>
-					{isPending && (
+					disabled={isAuthPending}>
+					{isAuthPending && (
 						<span className="text-2xl">
 							<FaSpinner className="animate-btn" />
 						</span>
 					)}
 					LOG IN
 				</button>
+
+				<Link
+					href={'/sign-up'}
+					className="sign-up-link">
+					Don&#39;t have an Account? Sign Up
+				</Link>
 
 				{errorMessage.length > 0 && (
 					<ul className="error-msg w-[90%] py-1 flex flex-col items-center justify-evenly gap-3 mx-auto border border-red-600">

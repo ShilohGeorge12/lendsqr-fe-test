@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import './globals.scss';
-
 import localFont from 'next/font/local';
 
 import { ContextProvider } from '@/context';
+import { AuthProvider } from '@/utils/AuthProvider';
+import './globals.scss';
 
 const avenir = localFont({
 	src: './fonts/AvenirNextLTPro-Bold.otf',
@@ -45,7 +45,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 	return (
 		<html lang="en">
 			<body className={`${avenir.variable} ${avenirRegular.variable} ${robotoMedium} ${robotoReguler} ${workSansReguler}`}>
-				<ContextProvider>{children}</ContextProvider>
+				<ContextProvider>
+					<AuthProvider>{children}</AuthProvider>
+				</ContextProvider>
 			</body>
 		</html>
 	);

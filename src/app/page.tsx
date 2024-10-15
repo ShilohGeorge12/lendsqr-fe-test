@@ -1,10 +1,12 @@
-import './app.scss';
-
 import Image from 'next/image';
 
-import logo from '@/assets/logo.png';
+
 import { SignInSvg } from '@/components/svg/';
-import { SignUpForm } from '@/components/UI/signUpForm';
+import { SignInForm } from '@/components/UI/signInForm';
+
+
+import logo from '@/assets/logo.png';
+import './app.scss';
 
 export default function Home() {
 	return (
@@ -19,7 +21,7 @@ export default function Home() {
 				<section className="sign-in-col-1">
 					<SignInSvg />
 				</section>
-				<SignUpForm />
+				<SignInForm />
 			</section>
 		</main>
 	);

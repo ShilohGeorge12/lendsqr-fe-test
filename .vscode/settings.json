@@ -9,41 +9,38 @@
 		"**/context/**/index.tsx": "Context API",
 		"**/lib/**/index.tsx": "${dirname} - Service",
 		"**/hooks/**/index.tsx": "${dirname} - Hook",
+		"**/utils/**/index.tsx": "${dirname} - Util",
 		"**/types/**/index.tsx": "Types"
 	},
-	"importSorter.sortConfiguration.customOrderingRules.defaultNumberOfEmptyLinesAfterGroup": 2,
+	"importSorter.sortConfiguration.customOrderingRules.defaultNumberOfEmptyLinesAfterGroup": 1,
 	"importSorter.sortConfiguration.customOrderingRules.rules": [
 		{
 			"regex": "^next*",
-			"orderLevel": 10
+			"orderLevel": 5
 		},
 		{
 			"regex": "^react*",
-			"orderLevel": 10
+			"orderLevel": 8
 		},
 		{
 			"regex": "^@/lib/*",
-			"orderLevel": 20
-		},
-		{
-			"regex": "^mongoose*",
-			"orderLevel": 20
+			"orderLevel": 10
 		},
 		{
 			"regex": "^@/hooks/*",
-			"orderLevel": 30
+			"orderLevel": 20
 		},
 		{
 			"regex": "^@/components/*",
-			"orderLevel": 30
+			"orderLevel": 20
 		},
 		{
 			"regex": "^@/types/*",
-			"orderLevel": 40
+			"orderLevel": 30
 		},
 		{
 			"regex": ".*",
-			"orderLevel": 50
+			"orderLevel": 40
 		}
 	]
 }
