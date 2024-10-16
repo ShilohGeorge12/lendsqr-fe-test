@@ -1,10 +1,10 @@
 'use client';
 import { useMemo, useState } from 'react';
 
-import { USER_WITHOUT_PASSWORD_TYPE } from '@/types';
+import { GuarantorsType, UsersType } from '@/types';
 
 interface usePaginationProps {
-	filteredUsers: USER_WITHOUT_PASSWORD_TYPE[];
+	filteredUsers: (UsersType | GuarantorsType)[];
 	itemsPerPageOptions?: number[];
 	indexOfFirstItemPerPage?: number;
 }

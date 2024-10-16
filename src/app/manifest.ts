@@ -1,10 +1,10 @@
 import { MetadataRoute } from 'next';
 
-// import { env } from '@/env';
+import { env } from '@/env';
 
 export default function manifest(): MetadataRoute.Manifest {
 	return {
-		// scope: '/',
+		scope: '/',
 		lang: 'en',
 		name: 'lendsqr-fe-test',
 		description:
@@ -29,10 +29,10 @@ export default function manifest(): MetadataRoute.Manifest {
 			},
 		],
 		protocol_handlers: [
-			// {
-			// 	protocol: 'web+taskdrive',
-			// 	url: env.BASE_URL ? `${env.BASE_URL}/%s` : `http://localhost:${process.env.PORT ?? 4550}/%s`,
-			// },
+			{
+				protocol: 'web+lendsqr-fe-test',
+				url: env.BASE_URL ? `${env.BASE_URL}/%s` : `http://localhost:${process.env.PORT ?? 3220}/%s`,
+			},
 		],
 	};
 }

@@ -40,15 +40,6 @@ export function SignInForm() {
 			setErrorMessage(['fill in a correct email and password', 'password must be between 6-15 characthers']);
 			return;
 		}
-
-		const fakeUser = {
-			token: '',
-			password: 'sg@133',
-			email: 'sg@gmail.com',
-			organization: 'Adedeji',
-			_id: 'testing_id',
-		};
-
 		if (isAuthenticated) {
 			setFormData(initState);
 			push('/dashboard/users');
@@ -63,9 +54,6 @@ export function SignInForm() {
 			setErrorMessage([error]);
 			return;
 		}
-
-		// sessionStorage.setItem('user', JSON.stringify(fakeUser));
-		// dispatch({ type: 'isLoggedIn', payload: { loggedIn: true, user: { email: formData.email } } });
 	};
 
 	useEffect(() => {

@@ -8,7 +8,6 @@ import { useEffect } from 'react';
 
 import { StarReview } from '@/components/UI/rating';
 
-import pic from '@/assets/image_4.png';
 import { useGlobals } from '@/context';
 import { useAuthContext } from '@/utils/AuthProvider';
 
@@ -19,7 +18,7 @@ export function LayoutClient({ _id }: { _id: string }) {
 		isAuthPending,
 	} = useAuthContext();
 	const {
-		state: { users, guarantors },
+		state: { users },
 		dispatch,
 	} = useGlobals();
 
@@ -78,8 +77,10 @@ export function LayoutClient({ _id }: { _id: string }) {
 					<section className="dashboard-users-details-summary-details">
 						<div className="dashboard-users-details-summary-details-image-container">
 							<Image
-								src={pic}
+								src={'/user.png'}
 								alt="user profile"
+								width={100}
+								height={100}
 							/>
 						</div>
 

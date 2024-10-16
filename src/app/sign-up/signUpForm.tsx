@@ -1,11 +1,8 @@
 'use client';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-
 
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
-
 
 import { useAuthContext } from '@/utils/AuthProvider';
 import { z } from 'zod';
@@ -17,11 +14,7 @@ const schema = z.object({
 });
 
 export function SignUpForm() {
-	const {
-		state: { isAuthenticated },
-		isAuthPending,
-		onSignUp,
-	} = useAuthContext();
+	const { isAuthPending, onSignUp } = useAuthContext();
 	const initState: z.infer<typeof schema> = {
 		email: '',
 		password: '',
@@ -51,13 +44,6 @@ export function SignUpForm() {
 			return;
 		}
 
-		// const fakeUser = {
-		// 	token: '',
-		// 	password: 'sg@133',
-		// 	email: 'sg@gmail.com',
-		// 	organization: 'Lendsqr',
-		// 	_id: 'testing_id',
-		// };
 		const error = onSignUp({
 			email: formData.email,
 			password: formData.password,

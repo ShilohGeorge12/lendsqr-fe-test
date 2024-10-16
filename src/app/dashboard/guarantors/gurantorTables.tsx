@@ -4,7 +4,6 @@ import { redirect } from 'next/navigation';
 
 import { useEffect, useMemo, useState } from 'react';
 import { RiFilter3Line } from 'react-icons/ri';
-import { TbDotsVertical } from 'react-icons/tb';
 
 import { ActiveUser2, UserIcon1, UsersWithLoan, UsersWithSavings } from '@/components/svg/svgs3';
 import { DashboardTablePagination } from '@/components/UI/Dashboard/tablePagination';

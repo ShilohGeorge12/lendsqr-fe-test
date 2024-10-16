@@ -1,8 +1,8 @@
 'use client';
 
-import { createContext, ReactNode, useContext, useEffect, useReducer } from 'react';
+import { createContext, ReactNode, useContext, useReducer } from 'react';
 
-import type { State, ReducerType, stateAction, ActiveUserType } from '../types';
+import type { State, ReducerType, stateAction } from '../types';
 
 const initState: State = {
 	isLoggedIn: false,
@@ -19,7 +19,7 @@ const initState: State = {
 
 const MyContext = createContext({
 	state: initState,
-	dispatch(_val: stateAction) {},
+	dispatch(_: stateAction) {},
 });
 
 const reducer: ReducerType = (state, action) => {
