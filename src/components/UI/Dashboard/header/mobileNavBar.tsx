@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
 import { FaHome } from 'react-icons/fa';
 import { IoIosMenu } from 'react-icons/io';
 import { MdKeyboardArrowDown } from 'react-icons/md';
-
 
 import {
     BreifCase1, ChartBar, DecisionModels, Loan, Sliders, User1, UserCog, UserFreinds
@@ -13,10 +13,10 @@ import {
 import {
     Bank, CoinSolid, Galazy, Group104, IconSvg, PiggyBank, Scroll, UserCheck, UserTimes
 } from '@/components/svg/svgs2';
-import { Badge, ClipBoard } from '@/components/svg/svgs3';
-
+import { Badge, ClipBoard, LogOutSvg, Tire } from '@/components/svg/svgs3';
 
 import { useGlobals } from '@/context';
+import { useAuthContext } from '@/utils/AuthProvider';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export function MobileNavBar() {
@@ -24,6 +24,7 @@ export function MobileNavBar() {
 		state: { nav_menu },
 		dispatch,
 	} = useGlobals();
+	const { onLogout } = useAuthContext();
 	const path = usePathname();
 	const customers = [
 		{
@@ -182,7 +183,7 @@ export function MobileNavBar() {
 
 							<div className="mobile-nav-home">
 								<FaHome />
-								<p className="">Dashboard</p>
+								<p>Dashboard</p>
 							</div>
 						</section>
 
@@ -195,7 +196,7 @@ export function MobileNavBar() {
 									className={path === customer.href ? 'active' : ''}
 									onClick={() => dispatch({ type: 'nav_menu_close' })}>
 									<customer.icon />
-									<p className="">{customer.text}</p>
+									<p>{customer.text}</p>
 								</Link>
 							))}
 						</section>
@@ -210,7 +211,7 @@ export function MobileNavBar() {
 									className={path === business.href ? 'active' : ''}
 									onClick={() => dispatch({ type: 'nav_menu_close' })}>
 									<business.icon />
-									<p className="">{business.text}</p>
+									<p>{business.text}</p>
 								</Link>
 							))}
 						</section>
@@ -227,6 +228,28 @@ export function MobileNavBar() {
 									<p className="">{setting.text}</p>
 								</Link>
 							))}
+
+							<Link
+								href={'/dashboard/systems-messages'}
+								className={path === '/dashboard/systems-messages' ? 'active' : ''}
+								onClick={() => dispatch({ type: 'nav_menu_close' })}>
+								<Tire />
+								<p className="">Systems Messages</p>
+							</Link>
+						</section>
+
+						<section className="nav-logout">
+							<button
+								type="button"
+								name={`log out button`}
+								className={`nav-logout-btn`}
+								onClick={() => {
+									dispatch({ type: 'nav_menu_close' });
+									onLogout();
+								}}>
+								<LogOutSvg />
+								<p>Logout</p>
+							</button>
 						</section>
 					</motion.section>
 				</motion.nav>

@@ -1,7 +1,6 @@
 'use client';
 import { createContext, ReactNode, useContext, useEffect, useReducer, useTransition } from 'react';
 
-
 import { ActiveUserType } from '@/types';
 
 // Types for actions in the reducer
@@ -39,7 +38,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
 const AuthContext = createContext<{
 	state: AuthState;
 	isAuthPending: boolean;
-	onLogin: ({ email, password }: { email: string; password: string }) => void;
+	onLogin: ({ email, password }: { email: string; password: string }) => void | string;
 	onSignUp: ({ email, password }: { email: string; password: string }) => void | string;
 	onLogout: () => void;
 }>({
@@ -58,20 +57,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [isAuthPending, startTransition] = useTransition();
 
 	// Function to handle user login
-	const onLogin = ({ email, password }: Pick<ActiveUserType, 'email' | 'password'>): void => {
+	const onLogin = ({ email, password }: Pick<ActiveUserType, 'email' | 'password'>) => {
+		const storedUser = sessionStorage.getItem('user');
+		if (!storedUser) return;
+		const parsedUser = JSON.parse(storedUser) as ActiveUserType;
+
+		if (parsedUser.email !== email || parsedUser.password !== password) {
+			return 'Invalid login Credentials';
+		}
+
 		startTransition(() => {
-			const storedUser = sessionStorage.getItem('user');
-			if (!storedUser) return;
-
-			const parsedUser = JSON.parse(storedUser) as ActiveUserType;
-
 			if (parsedUser.email === email && parsedUser.password === password) {
 				parsedUser.token = 'auth_verified';
 				sessionStorage.setItem('user', JSON.stringify(parsedUser));
 				dispatch({ type: 'LOGIN', payload: parsedUser });
+				return;
 			}
 		});
 	};
+
+	// Function to handle user sign up
 	const onSignUp = ({ email, password }: Pick<ActiveUserType, 'email' | 'password'>) => {
 		const storedUser = sessionStorage.getItem('user');
 		if (storedUser) return 'A user Already Exists';

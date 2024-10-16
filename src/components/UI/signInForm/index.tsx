@@ -2,10 +2,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { FaSpinner } from 'react-icons/fa';
-
 
 import { useAuthContext } from '@/utils/AuthProvider';
 import { z } from 'zod';
@@ -56,10 +54,15 @@ export function SignInForm() {
 			push('/dashboard/users');
 			return;
 		}
-		onLogin({
+		const error = onLogin({
 			email: formData.email,
 			password: formData.password,
 		});
+
+		if (error) {
+			setErrorMessage([error]);
+			return;
+		}
 
 		// sessionStorage.setItem('user', JSON.stringify(fakeUser));
 		// dispatch({ type: 'isLoggedIn', payload: { loggedIn: true, user: { email: formData.email } } });
@@ -143,6 +146,7 @@ export function SignInForm() {
 						{errorMessage.map((error) => (
 							<li
 								key={error + ' message'}
+								style={{ listStyleType: 'none' }}
 								className="font-medium ">
 								{error}
 							</li>

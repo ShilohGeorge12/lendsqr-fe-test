@@ -384,6 +384,9 @@ header {
 				transition-duration: 500ms;
 				transition-property: all;
 				transition-timing-function: ease-in-out;
+				&:hover {
+					transform: scale(1.05);
+				}
 				svg {
 					fill: $font-color-main;
 					fill-opacity: 0.7;
@@ -393,6 +396,33 @@ header {
 					border-left: 4px solid $font-color2;
 				}
 			}
+		}
+	}
+}
+.nav-logout {
+	width: 100%;
+	@include flex-column(2px, center, flex-start);
+	color: $font-color-main;
+	font-family: $font--work-sans-regular;
+	padding-left: 20.25px;
+	margin-top: 10px;
+	.nav-logout-btn {
+		@include flex-row(8px, flex-start, center);
+		height: 40px;
+		border: 0px;
+		outline: 0px;
+		padding: 5px 0px;
+		color: $font-color-main;
+		background: transparent;
+		font-size: 14px;
+		font-weight: 400;
+		letter-spacing: 1px;
+		cursor: pointer;
+		transition-duration: 500ms;
+		transition-property: all;
+		transition-timing-function: ease-in-out;
+		&:hover {
+			transform: scale(1.1);
 		}
 	}
 }

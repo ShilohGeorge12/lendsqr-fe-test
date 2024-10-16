@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { RiFilter3Line } from 'react-icons/ri';
 import { TbDotsVertical } from 'react-icons/tb';
-import Select from 'react-select/base';
+import Select, { InputActionMeta } from 'react-select';
 
 import { ActiveUser2, UserIcon1, UsersWithLoan, UsersWithSavings } from '@/components/svg/svgs3';
 import { DashboardTablePagination } from '@/components/UI/Dashboard/tablePagination';
@@ -27,12 +27,13 @@ export function UserTable() {
 		}
 	}, [isAuthenticated, isAuthPending]);
 
-	const { data, error, isLoading, users } = useFetchUsers(isAuthenticated);
+	const { error, users } = useFetchUsers(isAuthenticated);
 	const { filters, handleFilterChange, resetFilters, filteredUsers } = useFilterUsers({ users });
 	const { options, currentOption, handleSelectChange, pageCount, handlePageClick, itemOffset, itemsPerPage } = usePagination({ filteredUsers });
 
 	// Modal state
-	const [showModal, setShowModal] = useState(false);
+	const [showModal, setShowModal] = useState(true);
+	const [showSelectFilter, setShowSelectFilter] = useState(false);
 	const activeUsers = useMemo(() => {
 		return users.filter((user) => user.status === 'Active').length;
 	}, [users]);
@@ -149,7 +150,7 @@ export function UserTable() {
 								<td
 									scope="row"
 									colSpan={6}>
-									No Users found.
+									No Users were found.
 								</td>
 							</tr>
 						)}
@@ -200,21 +201,55 @@ export function UserTable() {
 						</div>
 						<div className="filtering-modal-status">
 							<label htmlFor="status">Status</label>
-							{/* <Select
-					id={'react-select-2-live-region'}
-					menuPlacement="auto"
-					classNamePrefix={'dashboard-users-items-select'}
-					options={options}
-					styles={customStyles}
-					value={currentOption}
-					onChange={handleSelectChange}
-				/>
-							<Dropdown
-								placeholder="Select"
-								value={filters.status.value === '' ? 'None' : filters.status.value}
-								onChange={(e) => handleFilterChange('status', e.target.value)}
-								options={['None', 'Active', 'Inactive', 'Blacklisted', 'Pending']}
-							/> */}
+							<div
+								onClick={() => setShowSelectFilter((prev) => !prev)}
+								className="filtering-modal-status-select">
+								<p className="">{filters.status.value === '' ? 'None' : filters.status.value}</p>
+								{showSelectFilter && (
+									<ul>
+										<li
+											className={filters.status.value === '' ? 'status-active' : ''}
+											onClick={() => {
+												handleFilterChange('status', '');
+												setShowSelectFilter(false);
+											}}>
+											None
+										</li>
+										<li
+											className={filters.status.value === 'Active' ? 'status-active' : ''}
+											onClick={() => {
+												handleFilterChange('status', 'Active');
+												setShowSelectFilter(false);
+											}}>
+											Active
+										</li>
+										<li
+											className={filters.status.value === 'Inactive' ? 'status-active' : ''}
+											onClick={() => {
+												handleFilterChange('status', 'Inactive');
+												setShowSelectFilter(false);
+											}}>
+											Inactive
+										</li>
+										<li
+											className={filters.status.value === 'Blacklisted' ? 'status-active' : ''}
+											onClick={() => {
+												handleFilterChange('status', 'Blacklisted');
+												setShowSelectFilter(false);
+											}}>
+											Blacklisted
+										</li>
+										<li
+											className={filters.status.value === 'Pending' ? 'status-active' : ''}
+											onClick={() => {
+												handleFilterChange('status', 'Pending');
+												setShowSelectFilter(false);
+											}}>
+											Pending
+										</li>
+									</ul>
+								)}
+							</div>
 						</div>
 
 						<div className="filtering-modal-btn">
@@ -237,7 +272,6 @@ export function UserTable() {
 					</section>
 				)}
 
-				{/* {!isLoading && !data && ( */}
 				{filteredUsers && filteredUsers.length > 0 && (
 					<DashboardTablePagination
 						totalUsers={users.length}

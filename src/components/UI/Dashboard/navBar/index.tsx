@@ -2,14 +2,22 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
 import { FaHome } from 'react-icons/fa';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 
-import { BreifCase1, ChartBar, DecisionModels, Loan, Sliders, User1, UserCog, UserFreinds } from '@/components/svg';
-import { Bank, CoinSolid, Galazy, Group104, IconSvg, PiggyBank, Scroll, UserCheck, UserTimes } from '@/components/svg/svgs2';
-import { Badge, ClipBoard } from '@/components/svg/svgs3';
+import {
+    BreifCase1, ChartBar, DecisionModels, Loan, Sliders, User1, UserCog, UserFreinds
+} from '@/components/svg';
+import {
+    Bank, CoinSolid, Galazy, Group104, IconSvg, PiggyBank, Scroll, UserCheck, UserTimes
+} from '@/components/svg/svgs2';
+import { Badge, ClipBoard, LogOutSvg, Tire } from '@/components/svg/svgs3';
+
+import { useAuthContext } from '@/utils/AuthProvider';
 
 export function NavBar() {
+	const { onLogout } = useAuthContext();
 	const path = usePathname();
 	const customers = [
 		{
@@ -149,7 +157,7 @@ export function NavBar() {
 
 				<div className="nav-home">
 					<FaHome />
-					<p className="">Dashboard</p>
+					<p>Dashboard</p>
 				</div>
 			</section>
 			<section className="nav-customers">
@@ -161,7 +169,7 @@ export function NavBar() {
 						href={customer.href}
 						className={path === customer.href ? 'active' : ''}>
 						<customer.icon />
-						<p className="">{customer.text}</p>
+						<p>{customer.text}</p>
 					</Link>
 				))}
 			</section>
@@ -174,7 +182,7 @@ export function NavBar() {
 						href={business.href}
 						className={path === business.href ? 'active' : ''}>
 						<business.icon />
-						<p className="">{business.text}</p>
+						<p>{business.text}</p>
 					</Link>
 				))}
 			</section>
@@ -187,9 +195,27 @@ export function NavBar() {
 						href={setting.href}
 						className={path === setting.href ? 'active' : ''}>
 						<setting.icon />
-						<p className="">{setting.text}</p>
+						<p>{setting.text}</p>
 					</Link>
 				))}
+
+				<Link
+					href={'/dashboard/systems-messages'}
+					className={path === '/dashboard/systems-messages' ? 'active' : ''}>
+					<Tire />
+					<p>Systems Messages</p>
+				</Link>
+			</section>
+
+			<section className="nav-logout">
+				<button
+					type="button"
+					name={`log out button`}
+					className={`nav-logout-btn`}
+					onClick={onLogout}>
+					<LogOutSvg />
+					<p>Logout</p>
+				</button>
 			</section>
 		</nav>
 	);
