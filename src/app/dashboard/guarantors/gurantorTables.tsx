@@ -153,9 +153,9 @@ export function GuarantorsTable() {
 									<td>{guarantor.fullname.lastname}</td>
 									<td>{guarantor.email}</td>
 									<td>{guarantor.phoneNumber}</td>
-									<td>
+									{/* <td>
 										<TbDotsVertical />
-									</td>
+									</td> */}
 								</tr>
 							))}
 					</tbody>

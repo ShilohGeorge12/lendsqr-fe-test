@@ -1,25 +1,31 @@
 'use client';
 
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 import { useEffect, useMemo, useState } from 'react';
+import { FaUserTimes } from 'react-icons/fa';
+import { FaUserCheck } from 'react-icons/fa6';
+import { MdOutlineRemoveRedEye } from 'react-icons/md';
 import { RiFilter3Line } from 'react-icons/ri';
-import { TbDotsVertical } from 'react-icons/tb';
 
 import { ActiveUser2, UserIcon1, UsersWithLoan, UsersWithSavings } from '@/components/svg/svgs3';
 import { DashboardTablePagination } from '@/components/UI/Dashboard/tablePagination';
 import { useFilterUsers } from '@/hooks/useFilterUsers';
 import { usePagination } from '@/hooks/usePagination';
 
+import { useGlobals } from '@/context';
 import { useAuthContext } from '@/utils/AuthProvider';
 import { useFetchUsers } from '../../../../hooks/useFetchUsers';
 import { Spinner } from '../../loadingSpinner';
+import { MenuOptions } from '../../options';
 
 export function UserTable() {
 	const {
 		state: { isAuthenticated },
 		isAuthPending,
 	} = useAuthContext();
+	const { dispatch } = useGlobals();
+	const { push } = useRouter();
 
 	useEffect(() => {
 		if (!isAuthenticated && !isAuthPending) {
@@ -68,6 +74,29 @@ export function UserTable() {
 			icon: <UsersWithSavings />,
 		},
 	];
+
+	const blacklistUser = (_id: string) => {
+		if (!users) return;
+
+		const updatedUsers: typeof users = users.map((allUser) => {
+			if (allUser._id === _id) {
+				return { ...allUser, status: 'Blacklisted' };
+			}
+			return allUser;
+		});
+		dispatch({ type: 'update_users', payload: { users: updatedUsers } });
+	};
+	const activateUser = (_id: string) => {
+		if (!users) return;
+
+		const updatedUsers: typeof users = users.map((allUser) => {
+			if (allUser._id === _id) {
+				return { ...allUser, status: 'Active' };
+			}
+			return allUser;
+		});
+		dispatch({ type: 'update_users', payload: { users: updatedUsers } });
+	};
 
 	return (
 		<>
@@ -119,34 +148,54 @@ export function UserTable() {
 						</tr>
 					</thead>
 					<tbody>
-						{
-							// data &&
-							// 	data.length > 0 &&
-							filteredUsers &&
-								filteredUsers.length > 0 &&
-								filteredUsers.slice(itemOffset, itemOffset + itemsPerPage).map((user) => (
-									<tr
-										key={user._id}
-										className="dashboard-users-table-user-field">
-										<td>{user.organization}</td>
-										<td>{user.username}</td>
-										<td>{user.email}</td>
-										<td>{user.phoneNumber}</td>
-										<td>{user.DateJoined}</td>
-										<td>
-											<span
-												className={
-													user.status === 'Inactive' ? 'Inactive' : user.status === 'Pending' ? 'pending' : user.status === 'Blacklisted' ? 'blacklisted' : 'active'
-												}>
-												{user.status}
-											</span>
-										</td>
-										<td>
-											<TbDotsVertical />
-										</td>
-									</tr>
-								))
-						}
+						{filteredUsers &&
+							filteredUsers.length > 0 &&
+							filteredUsers.slice(itemOffset, itemOffset + itemsPerPage).map((user) => (
+								<tr
+									key={user._id}
+									className="dashboard-users-table-user-field">
+									<td>{user.organization}</td>
+									<td>{user.username}</td>
+									<td>{user.email}</td>
+									<td>{user.phoneNumber}</td>
+									<td>{user.DateJoined}</td>
+									<td>
+										<span
+											className={
+												user.status === 'Inactive' ? 'Inactive' : user.status === 'Pending' ? 'pending' : user.status === 'Blacklisted' ? 'blacklisted' : 'active'
+											}>
+											{user.status}
+										</span>
+									</td>
+									<td
+										className="options"
+										style={{ cursor: 'pointer' }}>
+										<MenuOptions>
+											<button
+												type="button"
+												name={`visit user ${user.fullname.firstname} details`}
+												onClick={() => push(`/dashboard/users/${user._id}`)}>
+												<MdOutlineRemoveRedEye />
+												View Details
+											</button>
+											<button
+												type="button"
+												name={`blacklist user ${user.fullname.firstname}`}
+												onClick={() => blacklistUser(user._id)}>
+												<FaUserTimes />
+												Blacklist User
+											</button>
+											<button
+												type="button"
+												name={`activate user ${user.fullname.firstname}`}
+												onClick={() => activateUser(user._id)}>
+												<FaUserCheck />
+												Activate User
+											</button>
+										</MenuOptions>
+									</td>
+								</tr>
+							))}
 					</tbody>
 					<tfoot>
 						{users && !isLoading && filteredUsers && filteredUsers.length === 0 && (

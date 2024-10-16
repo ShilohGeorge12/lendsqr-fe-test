@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 
 import { ContextProvider } from '@/context';
 import { AuthProvider } from '@/utils/AuthProvider';
+import { Toaster } from 'sonner';
 import './globals.scss';
 
 const avenir = localFont({
@@ -47,6 +48,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 			<body className={`${avenir.variable} ${avenirRegular.variable} ${robotoMedium} ${robotoReguler} ${workSansReguler}`}>
 				<ContextProvider>
 					<AuthProvider>{children}</AuthProvider>
+					<Toaster
+						richColors
+						position="bottom-left"
+						duration={4000}
+						closeButton
+						theme={'light'}
+					/>
 				</ContextProvider>
 			</body>
 		</html>

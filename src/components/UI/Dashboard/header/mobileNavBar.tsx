@@ -152,6 +152,8 @@ export function MobileNavBar() {
 			text: 'Audit Logs',
 		},
 	];
+	const userDetailsRegex = /^\/dashboard\/users\/[a-zA-Z0-9]+$/
+
 	return (
 		<AnimatePresence>
 			<button
@@ -238,6 +240,8 @@ export function MobileNavBar() {
 							</Link>
 						</section>
 
+						{
+					userDetailsRegex.test(path) && (
 						<section className="nav-logout">
 							<button
 								type="button"
@@ -251,6 +255,7 @@ export function MobileNavBar() {
 								<p>Logout</p>
 							</button>
 						</section>
+					)}
 					</motion.section>
 				</motion.nav>
 			)}

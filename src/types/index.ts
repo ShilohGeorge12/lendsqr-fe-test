@@ -80,7 +80,8 @@ export const isGuarantorsArray = (arg: (UsersType | GuarantorsType)[]): arg is G
 
 // Context Types
 export type stateAction =
-	| { type: 'users'; payload: { users: Omit<UsersType, 'password'>[] } }
+	| { type: 'update_users'; payload: { users: UsersType[] } }
+	| { type: 'users'; payload: { users: UsersType[] } }
 	| { type: 'guarantors'; payload: { guarantors: GuarantorsType[] } }
 	| { type: 'user'; payload: { user: Omit<ActiveUserType, 'password'> } }
 	| { type: 'isLoggedIn'; payload: { loggedIn: true; user: Omit<ActiveUserType, 'password'> } }

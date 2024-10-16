@@ -1,0 +1,32 @@
+[
+	{
+		"_id": "670f9b865352a1bd7d808f8b",
+		"fullname": {
+			"firstname": "Sofia",
+			"lastname": "Odom"
+		},
+		"email": "sofiaodom@gmail.com",
+		"phoneNumber": "+234(830) 575-2608",
+		"relationship": "Pastor"
+	},
+	{
+		"_id": "670f9b86d1b02f6aeb5099a3",
+		"fullname": {
+			"firstname": "Geraldine",
+			"lastname": "Hicks"
+		},
+		"email": "geraldinehicks@gmail.com",
+		"phoneNumber": "+234(945) 449-2240",
+		"relationship": "Pastor"
+	},
+	{
+		"_id": "670f9b8660cbb08782dfd154",
+		"fullname": {
+			"firstname": "Barber",
+			"lastname": "Lewis"
+		},
+		"email": "barberlewis@gmail.com",
+		"phoneNumber": "+234(951) 536-3176",
+		"relationship": "Pastor"
+	}
+]

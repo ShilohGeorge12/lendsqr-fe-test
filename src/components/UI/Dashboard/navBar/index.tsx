@@ -146,6 +146,8 @@ export function NavBar() {
 		},
 	];
 
+	const userDetailsRegex = /^\/dashboard\/users\/[a-zA-Z0-9]+$/;
+
 	return (
 		<nav>
 			<section className="nav-content-1">
@@ -207,16 +209,18 @@ export function NavBar() {
 				</Link>
 			</section>
 
-			<section className="nav-logout">
-				<button
-					type="button"
-					name={`log out button`}
-					className={`nav-logout-btn`}
-					onClick={onLogout}>
-					<LogOutSvg />
-					<p>Logout</p>
-				</button>
-			</section>
+			{userDetailsRegex.test(path) && (
+				<section className="nav-logout">
+					<button
+						type="button"
+						name={`log out button`}
+						className={`nav-logout-btn`}
+						onClick={onLogout}>
+						<LogOutSvg />
+						<p>Logout</p>
+					</button>
+				</section>
+			)}
 		</nav>
 	);
 }

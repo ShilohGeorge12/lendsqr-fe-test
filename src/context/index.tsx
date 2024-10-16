@@ -26,6 +26,8 @@ const reducer: ReducerType = (state, action) => {
 	switch (action.type) {
 		case 'users':
 			return { ...state, users: action.payload.users };
+		case 'update_users':
+			return { ...state, users: action.payload.users };
 		case 'guarantors':
 			return { ...state, guarantors: action.payload.guarantors };
 		case 'user':

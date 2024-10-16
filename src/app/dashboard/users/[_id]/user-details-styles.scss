@@ -173,6 +173,7 @@
 			}
 
 			.dashboard-users-details-summary-details-username {
+				grid-column: span 3 / span 3;
 				p {
 					width: 100%;
 					display: flex;
@@ -184,7 +185,9 @@
 						font-size: 22px;
 						font-weight: bold;
 						@media (max-width: 640px) {
+							width: 90%;
 							font-size: 13px;
+							text-align: center;
 						}
 					}
 				}
@@ -291,7 +294,8 @@
 		background: white;
 
 		.dashboard-users-details-general-details-personal-info,
-		.dashboard-users-details-general-details-education-employment {
+		.dashboard-users-details-general-details-education-employment,
+		.dashboard-users-details-general-details-guarantor {
 			padding: 5px 15px;
 			display: flex;
 			flex-direction: column;
@@ -338,10 +342,29 @@
 		.dashboard-users-details-general-details-education-employment {
 			div {
 				grid-template-columns: repeat(4, 1fr);
+
 				@media (max-width: 640px) {
 					grid-template-columns: repeat(2, 1fr);
 				}
 			}
+		}
+
+		.dashboard-users-details-general-details-guarantor {
+			div {
+				grid-template-columns: repeat(4, 1fr);
+				padding-top: 20px;
+				&:first-child {
+					padding-top: 0px;
+				}
+				@media (max-width: 640px) {
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+		}
+
+		.dashboard-users-details-general-details-not-found {
+			color: $font-color-main;
+			text-align: center;
 		}
 	}
 }

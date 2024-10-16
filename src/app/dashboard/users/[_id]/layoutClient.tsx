@@ -2,13 +2,34 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
+
+import { useEffect } from 'react';
+
+import { StarReview } from '@/components/UI/rating';
 
 import pic from '@/assets/image_4.png';
+import { useGlobals } from '@/context';
+import { useAuthContext } from '@/utils/AuthProvider';
 
 export function LayoutClient({ _id }: { _id: string }) {
 	const path = usePathname();
-	// const {} = use
+	const {
+		state: { isAuthenticated },
+		isAuthPending,
+	} = useAuthContext();
+	const {
+		state: { users, guarantors },
+		dispatch,
+	} = useGlobals();
+
+	useEffect(() => {
+		if (!isAuthenticated && !isAuthPending) {
+			redirect('/');
+		}
+	}, [isAuthenticated, isAuthPending]);
+
+	const user = users.find((user) => user._id === _id);
 
 	return (
 		<>
@@ -17,74 +38,106 @@ export function LayoutClient({ _id }: { _id: string }) {
 				<div>
 					<button
 						type="button"
-						name={`BLACKLIST USER button`}>
+						name={`BLACKLIST USER button`}
+						disabled={user ? false : true}
+						onClick={() => {
+							if (!user) return;
+
+							const updatedUsers: typeof users = users.map((allUser) => {
+								if (allUser._id === _id) {
+									return { ...allUser, status: 'Blacklisted' };
+								}
+								return allUser;
+							});
+							dispatch({ type: 'update_users', payload: { users: updatedUsers } });
+						}}>
 						BLACKLIST USER
 					</button>
 					<button
 						type="button"
-						name={`ACTIVATE USER button`}>
+						name={`ACTIVATE USER button`}
+						disabled={user ? false : true}
+						onClick={() => {
+							if (!user) return;
+
+							const updatedUsers: typeof users = users.map((allUser) => {
+								if (allUser._id === _id) {
+									return { ...allUser, status: 'Active' };
+								}
+								return allUser;
+							});
+							dispatch({ type: 'update_users', payload: { users: updatedUsers } });
+						}}>
 						ACTIVATE USER
 					</button>
 				</div>
 			</section>
 
-			<section className="dashboard-users-details-summary-section">
-				<section className="dashboard-users-details-summary-details">
-					<div className="dashboard-users-details-summary-details-image-container">
-						<Image
-							src={pic}
-							alt=""
-						/>
-					</div>
+			{user && (
+				<section className="dashboard-users-details-summary-section">
+					<section className="dashboard-users-details-summary-details">
+						<div className="dashboard-users-details-summary-details-image-container">
+							<Image
+								src={pic}
+								alt="user profile"
+							/>
+						</div>
 
-					<div className="dashboard-users-details-summary-details-username">
-						<p>Grace Effiom</p>
-						<p>LSQFf587g90</p>
-					</div>
+						<div className="dashboard-users-details-summary-details-username">
+							<p>
+								{user.fullname.firstname} {user.fullname.lastname}
+							</p>
+							<p>{user._id}</p>
+						</div>
 
-					<div className="dashboard-users-details-summary-details-user-tier">
-						<p>User’s Tier</p>
-						<p>LSQFf587g90</p>
-					</div>
+						<div className="dashboard-users-details-summary-details-user-tier">
+							<p>User’s Tier</p>
+							<StarReview tier={user.userTier} />
+						</div>
 
-					<div className="dashboard-users-details-summary-details-user-income">
-						<p>₦200,000.00</p>
-						<p>9912345678/Providus Bank</p>
-					</div>
+						<div className="dashboard-users-details-summary-details-user-income">
+							<p>
+								{user.monthlyIncome === '₦200,000.00 - ₦400,000.00' ? '₦200,000.00' : user.monthlyIncome === '₦400,000.00 - ₦600,000.00' ? '₦400,000.00' : '₦600,000.00'}
+							</p>
+							<p>
+								{user.transaction[0].accountNumber}/{user.transaction[0].bank}
+							</p>
+						</div>
+					</section>
+					<section className="dashboard-users-details-summary-links">
+						<Link
+							href={`/dashboard/users/${_id}`}
+							className={path === `/dashboard/users/${_id}` ? 'active' : ''}>
+							General Details
+						</Link>
+						<Link
+							href={`/dashboard/users/${_id}/documents`}
+							className={path === `/dashboard/users/${_id}/documents` ? 'active' : ''}>
+							Documents
+						</Link>
+						<Link
+							href={`/dashboard/users/${_id}/bank_details`}
+							className={path === `/dashboard/users/${_id}/bank_details` ? 'active' : ''}>
+							Bank Details
+						</Link>
+						<Link
+							href={`/dashboard/users/${_id}/loans`}
+							className={path === `/dashboard/users/${_id}/loans` ? 'active' : ''}>
+							Loans
+						</Link>
+						<Link
+							href={`/dashboard/users/${_id}/savings`}
+							className={path === `/dashboard/users/${_id}/savings` ? 'active' : ''}>
+							Savings
+						</Link>
+						<Link
+							href={`/dashboard/users/${_id}/app_and_system`}
+							className={path === `/dashboard/users/${_id}/app_and_system` ? 'active' : ''}>
+							App and System
+						</Link>
+					</section>
 				</section>
-				<section className="dashboard-users-details-summary-links">
-					<Link
-						href={`/dashboard/users/${_id}`}
-						className={path === `/dashboard/users/${_id}` ? 'active' : ''}>
-						General Details
-					</Link>
-					<Link
-						href={`/dashboard/users/${_id}/documents`}
-						className={path === `/dashboard/users/${_id}/documents` ? 'active' : ''}>
-						Documents
-					</Link>
-					<Link
-						href={`/dashboard/users/${_id}/bank_details`}
-						className={path === `/dashboard/users/${_id}/bank_details` ? 'active' : ''}>
-						Bank Details
-					</Link>
-					<Link
-						href={`/dashboard/users/${_id}/loans`}
-						className={path === `/dashboard/users/${_id}/loans` ? 'active' : ''}>
-						Loans
-					</Link>
-					<Link
-						href={`/dashboard/users/${_id}/savings`}
-						className={path === `/dashboard/users/${_id}/savings` ? 'active' : ''}>
-						Savings
-					</Link>
-					<Link
-						href={`/dashboard/users/${_id}/app_and_system`}
-						className={path === `/dashboard/users/${_id}/app_and_system` ? 'active' : ''}>
-						App and System
-					</Link>
-				</section>
-			</section>
+			)}
 		</>
 	);
 }
