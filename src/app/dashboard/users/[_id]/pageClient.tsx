@@ -40,7 +40,7 @@ export function PageClient({ _id }: { _id: string }) {
 					</p>
 				</div>
 			</section>
-			<section className="dashboard-users-details-general-details-personal-info">
+			<section className="dashboard-users-details-general-details-education-employment">
 				<h3> Education and Employment</h3>
 				<div>
 					<p>
