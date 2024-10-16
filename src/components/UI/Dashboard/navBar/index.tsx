@@ -167,7 +167,7 @@ export function NavBar() {
 					<Link
 						key={customer.id}
 						href={customer.href}
-						className={path === customer.href ? 'active' : ''}>
+						className={path === customer.href || path.includes(customer.href) ? 'active' : ''}>
 						<customer.icon />
 						<p>{customer.text}</p>
 					</Link>
