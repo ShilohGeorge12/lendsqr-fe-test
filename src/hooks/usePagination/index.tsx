@@ -6,9 +6,10 @@ import { USER_WITHOUT_PASSWORD_TYPE } from '@/types';
 interface usePaginationProps {
 	filteredUsers: USER_WITHOUT_PASSWORD_TYPE[];
 	itemsPerPageOptions?: number[];
+	indexOfFirstItemPerPage?: number;
 }
 
-export function usePagination({ filteredUsers, itemsPerPageOptions = [10, 15] }: usePaginationProps) {
+export function usePagination({ filteredUsers, itemsPerPageOptions = [15, 18, 20], indexOfFirstItemPerPage = 1 }: usePaginationProps) {
 	const [itemsPerPage, setItemsPerPage] = useState<number>(itemsPerPageOptions[0]);
 	const [itemOffset, setItemOffset] = useState(0);
 
@@ -16,7 +17,7 @@ export function usePagination({ filteredUsers, itemsPerPageOptions = [10, 15] }:
 		value: `${value}`,
 		label: `${value}`,
 	}));
-	const [currentOption, setCurrentOption] = useState<{ value: string; label: string } | null>(options[0]);
+	const [currentOption, setCurrentOption] = useState<{ value: string; label: string } | null>(options[indexOfFirstItemPerPage]);
 
 	const handleSelectChange = (option: { value: string; label: string } | null) => {
 		if (option && currentOption?.value !== option.value) {

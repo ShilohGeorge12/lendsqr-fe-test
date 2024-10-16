@@ -2,9 +2,9 @@
 
 import { useMemo, useState } from 'react';
 
-import { USER_WITHOUT_PASSWORD_TYPE } from '@/types';
+import { UsersType } from '@/types';
 
-export function useFilterUsers({ users }: { users: USER_WITHOUT_PASSWORD_TYPE[] }) {
+export function useFilterUsers({ users }: { users: UsersType[] }) {
 	const [filters, setFilters] = useState({
 		organization: { value: '' },
 		username: { value: '' },

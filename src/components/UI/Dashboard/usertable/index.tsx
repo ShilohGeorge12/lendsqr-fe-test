@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { RiFilter3Line } from 'react-icons/ri';
 import { TbDotsVertical } from 'react-icons/tb';
-import Select, { InputActionMeta } from 'react-select';
 
 import { ActiveUser2, UserIcon1, UsersWithLoan, UsersWithSavings } from '@/components/svg/svgs3';
 import { DashboardTablePagination } from '@/components/UI/Dashboard/tablePagination';
@@ -14,6 +13,7 @@ import { usePagination } from '@/hooks/usePagination';
 
 import { useAuthContext } from '@/utils/AuthProvider';
 import { useFetchUsers } from '../../../../hooks/useFetchUsers';
+import { Spinner } from '../../loadingSpinner';
 
 export function UserTable() {
 	const {
@@ -27,22 +27,26 @@ export function UserTable() {
 		}
 	}, [isAuthenticated, isAuthPending]);
 
-	const { error, users } = useFetchUsers(isAuthenticated);
-	const { filters, handleFilterChange, resetFilters, filteredUsers } = useFilterUsers({ users });
-	const { options, currentOption, handleSelectChange, pageCount, handlePageClick, itemOffset, itemsPerPage } = usePagination({ filteredUsers });
+	const { error, users, isLoading } = useFetchUsers({ isAuthenticated, dataType: 'users' });
+	const { filters, handleFilterChange, resetFilters, filteredUsers } = useFilterUsers({ users: users ? users : [] });
+	const { options, currentOption, handleSelectChange, pageCount, handlePageClick, itemOffset, itemsPerPage } = usePagination({
+		filteredUsers,
+		itemsPerPageOptions: [15, 18, 20],
+		indexOfFirstItemPerPage: 1,
+	});
 
 	// Modal state
-	const [showModal, setShowModal] = useState(true);
+	const [showModal, setShowModal] = useState(false);
 	const [showSelectFilter, setShowSelectFilter] = useState(false);
 	const activeUsers = useMemo(() => {
-		return users.filter((user) => user.status === 'Active').length;
+		return users ? users.filter((user) => user.status === 'Active').length : 0;
 	}, [users]);
 
 	const cards = [
 		{
 			id: '1',
 			title: 'USERS',
-			numbers: `${users.length}`,
+			numbers: users ? users.length : 0,
 			icon: <UserIcon1 />,
 		},
 		{
@@ -145,12 +149,21 @@ export function UserTable() {
 						}
 					</tbody>
 					<tfoot>
-						{filteredUsers && filteredUsers.length === 0 && (
+						{users && !isLoading && filteredUsers && filteredUsers.length === 0 && (
 							<tr className="dashboard-users-not-found">
 								<td
 									scope="row"
 									colSpan={6}>
 									No Users were found.
+								</td>
+							</tr>
+						)}
+						{isLoading && (
+							<tr className="dashboard-users-not-found">
+								<td
+									scope="row"
+									colSpan={6}>
+									<Spinner height />
 								</td>
 							</tr>
 						)}
@@ -274,7 +287,7 @@ export function UserTable() {
 
 				{filteredUsers && filteredUsers.length > 0 && (
 					<DashboardTablePagination
-						totalUsers={users.length}
+						totalUsers={users ? users.length : 0}
 						options={options}
 						pageCount={pageCount}
 						currentOption={currentOption}
