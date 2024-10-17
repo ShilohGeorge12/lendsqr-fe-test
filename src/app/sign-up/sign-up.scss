@@ -96,7 +96,7 @@
 					}
 				}
 
-				input {
+				input[name='email'] {
 					width: 90%;
 					height: 40px;
 					letter-spacing: 1.5px;
@@ -109,6 +109,8 @@
 					font-size: 1rem;
 					transition: 500ms all ease-in-out;
 					color: $font-color;
+
+					// padding-right: 87px;
 					&::placeholder {
 						color: $font-color3;
 						font-size: 0.89rem;
@@ -118,15 +120,25 @@
 						border-width: 3px;
 						transform: scale(1.05);
 					}
-				}
-				input[id='password'] {
-					width: 357px;
-					padding-right: 90px;
 					@media (max-width: 640px) {
-						width: 228px;
+						width: 85%;
+						height: 40px;
 						margin: 0px auto;
+						&::placeholder {
+							color: rgba(84, 95, 125, 1);
+							font-size: 1rem;
+						}
 					}
 				}
+
+				// input[name='password'] {
+				// 	width: 357px;
+				// 	padding-right: 90px;
+				// 	@media (max-width: 640px) {
+				// 		width: 228px;
+				// 		margin: 0px auto;
+				// 	}
+				// }
 
 				a {
 					width: fit-content;
@@ -212,15 +224,6 @@
 				}
 				.sign-up-col-2-form {
 					gap: 19px;
-					input {
-						width: 85%;
-						height: 40px;
-						&::placeholder {
-							color: rgba(84, 95, 125, 1);
-							font-size: 1rem;
-						}
-						margin: 0px auto;
-					}
 
 					a {
 						font-size: 0.75rem;
