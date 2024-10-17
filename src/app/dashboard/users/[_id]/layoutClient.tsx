@@ -29,6 +29,8 @@ export function LayoutClient({ _id }: { _id: string }) {
 	}, [isAuthenticated, isAuthPending]);
 
 	const user = users.find((user) => user._id === _id);
+	const isBlacklisted = user?.status === 'Blacklisted';
+	const isActive = user?.status === 'Active';
 
 	return (
 		<>
@@ -38,7 +40,8 @@ export function LayoutClient({ _id }: { _id: string }) {
 					<button
 						type="button"
 						name={`BLACKLIST USER button`}
-						disabled={user ? false : true}
+						disabled={isBlacklisted}
+						style={{ cursor: isBlacklisted ? 'default' : 'pointer' }}
 						onClick={() => {
 							if (!user) return;
 
@@ -55,7 +58,8 @@ export function LayoutClient({ _id }: { _id: string }) {
 					<button
 						type="button"
 						name={`ACTIVATE USER button`}
-						disabled={user ? false : true}
+						disabled={isActive}
+						style={{ cursor: isActive ? 'default' : 'pointer' }}
 						onClick={() => {
 							if (!user) return;
 

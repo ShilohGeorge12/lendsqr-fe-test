@@ -122,12 +122,6 @@ export function SignUpForm() {
 					</button>
 				</div>
 
-				{/* <Link
-					className="sign-up-col-2-link"
-					href={'/'}>
-					FORGOT PASSWORD?
-				</Link> */}
-
 				<button
 					type="submit"
 					name={`submit sign up details`}
@@ -137,7 +131,7 @@ export function SignUpForm() {
 							<FaSpinner className="animate-btn" />
 						</span>
 					)}
-					LOG IN
+					SIGN UP
 				</button>
 
 				{errorMessage.length > 0 && (

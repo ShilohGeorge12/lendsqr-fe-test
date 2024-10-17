@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	// Function to handle user login
 	const onLogin = ({ email, password }: Pick<ActiveUserType, 'email' | 'password'>) => {
 		const storedUser = sessionStorage.getItem('user');
-		if (!storedUser) return;
+		if (!storedUser) return 'Please Sign up, No user with your Credentials Exists';
 		const parsedUser = JSON.parse(storedUser) as ActiveUserType;
 
 		if (parsedUser.email !== email || parsedUser.password !== password) {

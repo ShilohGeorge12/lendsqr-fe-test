@@ -124,20 +124,28 @@ export function UserTable() {
 								<RiFilter3Line />
 							</td>
 
-							<td className="dashboard-users-table-username">
+							<td
+								className="dashboard-users-table-username"
+								onClick={() => setShowModal((prev) => !prev)}>
 								USERNAME
 								<RiFilter3Line />
 							</td>
 
-							<td className="dashboard-users-table-email">
+							<td
+								className="dashboard-users-table-email"
+								onClick={() => setShowModal((prev) => !prev)}>
 								EMAIL
 								<RiFilter3Line />
 							</td>
-							<td className="dashboard-users-table-phonenumber">
+							<td
+								className="dashboard-users-table-phonenumber"
+								onClick={() => setShowModal((prev) => !prev)}>
 								PHONE NUMBER
 								<RiFilter3Line />
 							</td>
-							<td className="dashboard-users-table-datejoined">
+							<td
+								className="dashboard-users-table-datejoined"
+								onClick={() => setShowModal((prev) => !prev)}>
 								DATE JOINED
 								<RiFilter3Line />
 							</td>
